@@ -1,11 +1,13 @@
 /* eslint-disable*/
 import React, { useState, useEffect } from "react";
+import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
 import "./main.css";
 
 const Main = () => {
   let today = new Date();
   let week = ["일", "월", "화", "수", "목", "금", "토"];
   let [focusTime, setFocusTime] = useState("02:10:25");
+  let navigate = useNavigate();
 
   return (
     <div className="container">
@@ -19,7 +21,7 @@ const Main = () => {
           <div className="time-div">
             <p className="time-title">Focus TIME</p>
             <p className="time-clock">{focusTime}</p>
-            <input className="time-btn" type="button" value="공부 시작하기" />
+            <input className="time-btn" onClick={()=>{navigate('/single/')}} type="button" value="공부 시작하기" />
           </div>
           {/* Focus Time 끝 */}
           {/* 총 공부 시간, 최대 집중 시간, 시작 시간, 종료 시간 */}

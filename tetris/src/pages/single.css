@@ -1,3 +1,7 @@
+.main-bg {
+  background: #E8F2FF;
+}
+
 .title-date {
   color: #0075ff;
   text-align: center;
@@ -7,12 +11,13 @@
   font-weight: 400;
   line-height: normal;
   letter-spacing: -0.09375rem;
-  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  margin-top : 0;
 }
 
-.time-div {
+.main-bg .time-div {
   border-radius: 1.25rem;
-  background: #e8f2ff;
+  background: white;
   padding: 1px;
 }
 
@@ -62,76 +67,20 @@
   transition: all 1s;
 }
 
-.timeText-div {
-  padding: 2rem;
-}
-.timeText-div .title {
-  color: #0075ff;
-  font-family: LINE Seed Sans KR;
-  font-size: 1.875rem;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-}
-
-.timeText-div .time {
-  color: #000;
-  font-family: LINE Seed Sans KR;
-  font-size: 2.25rem;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  letter-spacing: 0.1125rem;
-}
-
-.title-rank {
-  color: #000;
-  font-family: LINE Seed Sans KR;
-  font-size: 1.5625rem;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  letter-spacing: 0.03125rem;
-}
-.ranking p {
-  margin: 0 0 0 0;
-}
-.rank {
-  color: #0075ff;
-  text-align: center;
-  font-family: LINE Seed Sans KR;
-  font-size: 2.75rem;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-}
-
-.rank-text {
-  color: #000;
-  text-align: center;
-  font-family: LINE Seed Sans KR;
-  font-size: 1.25rem;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-}
-
-.rank-grade {
-  color: #525252;
-  text-align: center;
-  font-family: LINE Seed Sans KR;
-  font-size: 0.9375rem;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  letter-spacing: -0.02813rem;
+.icon-div {
+  background: white;
+  margin-top: 1rem;
+  height: 24.5rem;
+  border-radius: 1.25rem;
+  background: #fff;
 }
 
 .toDo-div {
   border-radius: 1.25rem;
-  border: rgba(0, 117, 255, 0.50) solid 1px;
+  border: rgba(0, 117, 255, 0.5) solid 1px;
   padding: 0 0;
   position: relative;
+  background: white;
 }
 
 .toDo-div .title {
@@ -144,7 +93,7 @@
   line-height: normal;
   border-bottom: #0075ff solid 1px;
   margin-top: 1rem;
-  margin-bottom : 2rem;
+  margin-bottom: 2rem;
 }
 
 .toDo-div .toDo {
