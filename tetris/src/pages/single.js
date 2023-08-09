@@ -11,7 +11,7 @@ const Main = () => {
   const toggleStudy = () => setStudy((prev) => !prev);
 
   return (
-    <div className="main-bg">
+    <div className="single-bg">
       <div className="container">
         <p className="title-date">
           {today.getMonth() + 1}월 {today.getDate()}일 ({week[today.getDay()]})
@@ -22,7 +22,7 @@ const Main = () => {
             {/* Focus Time  */}
             <div className="time-div">
               <p className="time-title">Focus TIME</p>
-              <p className="time-clock">{focusTime}</p>
+              <p className="time-clock">{focusTime}</p> <br/>
               <input
                 className="time-btn"
                 onClick={() => {

@@ -1,0 +1,81 @@
+.report-title {
+  color: #0075ff;
+  text-align: center;
+  font-family: LINE Seed Sans KR;
+  font-size: 2rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  padding-top: 4rem;
+}
+
+.report-detail .time-title {
+  color: #0075ff;
+  font-family: LINE Seed Sans KR;
+  font-size: 1.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.report-detail .focus-time-div {
+  background-color: white !important;
+  border-radius: 15px;
+  margin : 0 10%;
+}
+
+.report-detail .time {
+  color: #0075ff;
+  font-family: LINE Seed Sans KR;
+  font-size: 3.75rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -0.375rem;
+  margin: 0 0 0 0;
+  padding : 1rem 2rem;
+  padding-bottom: 0.3rem;
+}
+
+.focus-percent-title {
+  color: #000;
+  text-align: center;
+  font-family: LINE Seed Sans KR;
+  font-size: 2.5rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-top: 5%;
+}
+
+.focus-percent {
+  color: #0075ff;
+  text-align: center;
+  font-family: LINE Seed Sans KR;
+  font-size: 5rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.back-main-btn {
+  border-radius: 0.625rem;
+  border: 4px solid #398fff;
+  background: #fff;
+  width: 30rem;
+  height: 5rem;
+  color: #0075ff;
+  text-align: center;
+  font-family: LINE Seed Sans KR;
+  font-size: 2.5rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  margin-top: 10%;
+  margin-bottom: 10%;
+}
+
+.back-main-btn:hover {
+  background: #398fff;
+  color: white;
+}

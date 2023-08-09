@@ -8,9 +8,11 @@ const Main = () => {
   let week = ["일", "월", "화", "수", "목", "금", "토"];
   let [focusTime, setFocusTime] = useState("02:10:25");
   let navigate = useNavigate();
+  let [todo, setTodo] = useState([]);
+  let [todoText, setAddTodoText] = useState("");
 
   return (
-    <div className="container">
+    <div className="container main">
       <p className="title-date">
         {today.getMonth() + 1}월 {today.getDate()}일 ({week[today.getDay()]})
       </p>
@@ -20,8 +22,15 @@ const Main = () => {
           {/* Focus Time  */}
           <div className="time-div">
             <p className="time-title">Focus TIME</p>
-            <p className="time-clock">{focusTime}</p>
-            <input className="time-btn" onClick={()=>{navigate('/single/')}} type="button" value="공부 시작하기" />
+            <p className="time-clock">{focusTime}</p> <br />
+            <input
+              className="time-btn"
+              onClick={() => {
+                navigate("/single/");
+              }}
+              type="button"
+              value="공부 시작하기"
+            />
           </div>
           {/* Focus Time 끝 */}
           {/* 총 공부 시간, 최대 집중 시간, 시작 시간, 종료 시간 */}
@@ -60,22 +69,38 @@ const Main = () => {
           <p className="title">Focus TO DO</p>
           {/* TodoList 목록 */}
           <div className="toDoList-div">
-            <div className="toDoList row">
-              <input type="checkbox" className="col-1" />
-              <p className="text col">백준</p>
-            </div>
-          </div>
-          <div className="toDoList-div">
-            <div className="toDoList row">
-              <input type="checkbox" className="col-1" />
-              <p className="text col">토익</p>
-            </div>
+            {todo.map(function (text, i) {
+              return (
+                <div className="toDoList row">
+                  <input type="checkbox" className="col-1" />
+                  <p className="text col">{text}</p>
+                  <button onClick={() => {
+                    let newTodo = [...todo];
+                    newTodo.splice(i, 1);
+                    setTodo(newTodo);
+                  }} className="col-1">X</button>
+                </div>
+              );
+            })}
           </div>
           {/* TodoList 목록 끝 */}
           {/* 할일 추가 창 */}
           <div className="AddToDo-div">
-            <input type="text" placeholder="할 일 추가하기" />
-            <input type="button" value="+"/>
+            <input
+              type="text"
+              value={todoText}
+              onChange={(e) => {
+                setAddTodoText(e.target.value);
+              }}
+              placeholder="할 일 추가하기"
+            />
+            <input
+              type="button"
+              onClick={() => {
+                setTodo([todoText, ...todo]);
+              }}
+              value="+"
+            />
           </div>
           {/* 할일 추가 창 끝 */}
         </div>
