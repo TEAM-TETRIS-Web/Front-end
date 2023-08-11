@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
 import "./single.css";
-
+import Todo from "./todo.js"
 const Main = () => {
   let today = new Date();
   let week = ["일", "월", "화", "수", "목", "금", "토"];
@@ -40,30 +40,7 @@ const Main = () => {
             </div>
             {/* 공부 화면  끝 */}
           </div>
-          {/* Focus To Do */}
-          <div className="toDo-div col">
-            <p className="title">Focus TO DO</p>
-            {/* TodoList 목록 */}
-            <div className="toDoList-div">
-              <div className="toDoList row">
-                <input type="checkbox" className="col-1" />
-                <p className="text col">백준</p>
-              </div>
-            </div>
-            <div className="toDoList-div">
-              <div className="toDoList row">
-                <input type="checkbox" className="col-1" />
-                <p className="text col">토익</p>
-              </div>
-            </div>
-            {/* TodoList 목록 끝 */}
-            {/* 할일 추가 창 */}
-            <div className="AddToDo-div">
-              <input type="text" placeholder="할 일 추가하기" />
-              <input type="button" value="+" />
-            </div>
-            {/* 할일 추가 창 끝 */}
-          </div>
+          <Todo />
         </div>
       </div>
     </div>

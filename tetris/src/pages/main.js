@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
 import "./main.css";
-
+import Todo from "./todo.js";
 const Main = () => {
   let today = new Date();
   let week = ["일", "월", "화", "수", "목", "금", "토"];
@@ -62,48 +62,8 @@ const Main = () => {
               <p className="rank-grade">(전체 543등)</p>
             </div>
           </div>
-        </div>
-
-        {/* Focus To Do */}
-        <div className="toDo-div col">
-          <p className="title">Focus TO DO</p>
-          {/* TodoList 목록 */}
-          <div className="toDoList-div">
-            {todo.map(function (text, i) {
-              return (
-                <div className="toDoList row">
-                  <input type="checkbox" className="col-1" />
-                  <p className="text col">{text}</p>
-                  <button onClick={() => {
-                    let newTodo = [...todo];
-                    newTodo.splice(i, 1);
-                    setTodo(newTodo);
-                  }} className="col-1">X</button>
-                </div>
-              );
-            })}
-          </div>
-          {/* TodoList 목록 끝 */}
-          {/* 할일 추가 창 */}
-          <div className="AddToDo-div">
-            <input
-              type="text"
-              value={todoText}
-              onChange={(e) => {
-                setAddTodoText(e.target.value);
-              }}
-              placeholder="할 일 추가하기"
-            />
-            <input
-              type="button"
-              onClick={() => {
-                setTodo([todoText, ...todo]);
-              }}
-              value="+"
-            />
-          </div>
-          {/* 할일 추가 창 끝 */}
-        </div>
+        </div>  
+        <Todo />
       </div>
     </div>
   );
