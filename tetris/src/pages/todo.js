@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
 
 const Todo = () => {
-  let [todo, setTodo] = useState([]);
+  let [todo, setTodo] = useState(["할 일"]);
   let [todoText, setAddTodoText] = useState("");
 
   return (
@@ -19,7 +19,7 @@ const Todo = () => {
                 let newTodo = [...todo];
                 newTodo.splice(i, 1);
                 setTodo(newTodo);
-              }} className="col-1">X</button>
+              }} className="col-1 del-btn">X</button>
             </div>
           );
         })}

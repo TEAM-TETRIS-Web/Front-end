@@ -6,9 +6,15 @@ import Todo from "./todo.js"
 const Main = () => {
   let today = new Date();
   let week = ["일", "월", "화", "수", "목", "금", "토"];
-  let [focusTime, setFocusTime] = useState("02:10:25");
+  let [focusTime, setFocusTime] = useState(0);
   let navigate = useNavigate();
-  const toggleStudy = () => setStudy((prev) => !prev);
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setFocusTime(focusTime => focusTime + 1);
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   return (
     <div className="single-bg">

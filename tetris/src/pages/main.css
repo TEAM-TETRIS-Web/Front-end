@@ -207,3 +207,15 @@
   justify-content: center;
   font-family: LINE Seed Sans KR;
 }
+
+.del-btn {
+  border : none;
+  background : none;
+  opacity: 10%;
+  font-weight: bold !important;
+}
+
+.del-btn:hover {
+  opacity: 80%;
+  transition: 0.5s;
+}
