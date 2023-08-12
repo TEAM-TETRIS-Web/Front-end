@@ -10,7 +10,7 @@
   padding-top: 1.5rem;
 }
 
-.time-div {
+.main-page .time-div {
   border-radius: 1.25rem;
   background: #e8f2ff;
   padding: 1px;
@@ -125,97 +125,4 @@
   font-weight: 400;
   line-height: normal;
   letter-spacing: -0.02813rem;
-}
-
-.main .toDo-div {
-  border-radius: 1.25rem;
-  border: rgba(0, 117, 255, 0.50) solid 1px;
-  padding: 0 0;
-  position: relative;
-}
-
-.toDo-div .title {
-  color: #0075ff;
-  text-align: center;
-  font-family: LINE Seed Sans KR;
-  font-size: 2.1875rem;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  border-bottom: #0075ff solid 1px;
-  margin-top: 1rem;
-  margin-bottom : 2rem;
-}
-
-.toDo-div .toDo {
-  text-align: left;
-  padding: 0 0;
-  display: inline-block;
-}
-
-.toDo-div .text {
-  margin: 0 0 0 0;
-  line-height: 120%;
-  padding: 0 0;
-  text-align: left;
-  color: #000;
-  font-family: LINE Seed Sans KR;
-  font-size: 1.25rem;
-  font-style: normal;
-  font-weight: 250;
-  line-height: normal;
-}
-
-.toDoList {
-  height: 1.3rem;
-  width: auto;
-  margin: 1.2rem 1.2rem;
-}
-
-.AddToDo-div {
-  border-radius: 0.625rem;
-  border: 2px solid rgba(0, 117, 255, 0.5);
-  position: absolute;
-  bottom: 1rem;
-  width: 94%;
-  margin: 0 3%;
-  text-align: left;
-}
-
-.AddToDo-div input[type="text"] {
-  border: none;
-  padding: 0 0;
-  margin: 10px;
-  width: 90%;
-  height: 24px;
-}
-
-.AddToDo-div input[type="text"]:focus {
-  outline: none;
-}
-
-.AddToDo-div input[type="button"] {
-  display: inline-block;
-  font-size: 1.5rem;
-  width: 24px;
-  height: 35px;
-  padding: 0;
-  border: none;
-  background-color: transparent;
-  align-items: center;
-  font-weight: 400;
-  justify-content: center;
-  font-family: LINE Seed Sans KR;
-}
-
-.del-btn {
-  border : none;
-  background : none;
-  opacity: 10%;
-  font-weight: bold !important;
-}
-
-.del-btn:hover {
-  opacity: 80%;
-  transition: 0.5s;
 }

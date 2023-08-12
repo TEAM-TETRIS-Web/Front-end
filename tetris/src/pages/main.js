@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
 import "./main.css";
 import Todo from "./todo.js";
+
 const Main = () => {
   let today = new Date();
   let week = ["일", "월", "화", "수", "목", "금", "토"];
@@ -12,7 +13,7 @@ const Main = () => {
   let [todoText, setAddTodoText] = useState("");
 
   return (
-    <div className="container main">
+    <div className="container main-page">
       <p className="title-date">
         {today.getMonth() + 1}월 {today.getDate()}일 ({week[today.getDay()]})
       </p>

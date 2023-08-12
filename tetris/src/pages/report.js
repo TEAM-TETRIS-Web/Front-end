@@ -6,7 +6,7 @@ const Report = () => {
   let [focusTime, setFocusTime] = useState("02 : 10 : 25");
   let navigate = useNavigate();
   return (
-    <div className="single-bg">
+    <div className="blue-bg">
       <div className="container">
         <p className="report-title">Focus MATE  분석 리포트</p>
         {/* 총 공부 시간 */}
