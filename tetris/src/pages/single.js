@@ -28,7 +28,7 @@ const Main = () => {
         <div className="row">
           <div className="col">
             {/* Focus Time  */}
-            <div className="time-div">
+            <div className="time-div white-bg">
               <p className="time-title">Focus TIME</p>
               <p className="time-clock">{focusTime}</p> <br/>
               <input

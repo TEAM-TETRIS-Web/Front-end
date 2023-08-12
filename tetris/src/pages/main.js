@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
 import "./main.css";
+import "./common/color.css";
+
 import Todo from "./todo.js";
 
 const Main = () => {
@@ -19,9 +21,9 @@ const Main = () => {
       </p>
       {/* 메인창 */}
       <div className="row">
-        <div className="col time-detail-div">
+        <div className="col">
           {/* Focus Time  */}
-          <div className="time-div">
+          <div className="time-div blue-bg">
             <p className="time-title">Focus TIME</p>
             <p className="time-clock">{focusTime}</p> <br />
             <input

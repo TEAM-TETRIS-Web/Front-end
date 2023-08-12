@@ -3,16 +3,14 @@
   text-align: center;
   font-family: LINE Seed Sans KR;
   font-size: 1.875rem;
-  font-style: normal;
-  font-weight: 400;
   line-height: normal;
   letter-spacing: -0.09375rem;
   padding-top: 1.5rem;
 }
 
-.main-page .time-div {
+/* Focus Time CSS Start */
+.time-div {
   border-radius: 1.25rem;
-  background: #e8f2ff;
   padding: 1px;
 }
 
@@ -61,7 +59,9 @@
   color: white;
   transition: all 1s;
 }
+/* Focus Time CSS End */
 
+/* 총 공부시간 / 최대 집중 시간 / 시작 시간 종료 시간 부분  Start */
 .timeText-div {
   padding: 2rem;
 }
@@ -126,3 +126,5 @@
   line-height: normal;
   letter-spacing: -0.02813rem;
 }
+
+/* 총 공부시간 / 최대 집중 시간 / 시작 시간 종료 시간 부분  END */
