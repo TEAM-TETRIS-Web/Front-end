@@ -10,7 +10,7 @@ const Navigation = () => {
       <Container>
         <Navbar.Brand href="/">Focus Mate</Navbar.Brand>
         <Nav className="me-right">
-          <Nav.Link href="/studyRoom">공부방</Nav.Link>
+          <Nav.Link href="/room">공부방</Nav.Link>
           <Nav.Link href="/comunity">커뮤니티</Nav.Link>
           <Nav.Link href="/mypage">마이 페이지</Nav.Link>
           <Nav.Link href="/logout">로그아웃</Nav.Link>

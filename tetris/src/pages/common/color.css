@@ -9,3 +9,11 @@
 .blue-font {
   color: #0075ff;
 }
+
+.white-font {
+  color : white;
+}
+
+.none-margin {
+  margin-bottom: 0;
+}
