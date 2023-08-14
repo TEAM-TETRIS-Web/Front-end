@@ -3,6 +3,7 @@
   border: rgba(0, 117, 255, 0.50) solid 1px;
   padding: 0 0;
   position: relative;
+  height: 680px;
 }
 
 .toDo-div .title {
@@ -15,7 +16,11 @@
   line-height: normal;
   border-bottom: #0075ff solid 1px;
   margin-top: 1rem;
-  margin-bottom : 2rem;
+  margin-bottom : 0.5rem;
+}
+
+.toDoList-div {
+  overflow: auto;
 }
 
 .toDo-div .toDo {

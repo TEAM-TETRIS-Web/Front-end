@@ -1,3 +1,4 @@
+/* eslint-disable*/
 import React, { useState, useEffect } from "react";
 import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
 import "./report.css";

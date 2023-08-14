@@ -4,6 +4,7 @@ import Main from "../pages/main";
 import Single from "../pages/single";
 import Report from "../pages/report";
 import RoomList from "../pages/roomList";
+import Room from "../pages/room"; 
 
 function AppRouter() {
   return (
@@ -13,7 +14,8 @@ function AppRouter() {
         <Route path="/" element={<Main />} />
         <Route path="/single" element={<Single/>} />
         <Route path="/report" element={<Report />} />
-        <Route path="/room" element={<RoomList />} />
+        <Route path="/roomlist" element={<RoomList />} />
+        <Route path="/room/:id" element={<Room />} />
       </Routes>
     </>
   ) 

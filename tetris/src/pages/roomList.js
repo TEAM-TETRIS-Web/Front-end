@@ -1,5 +1,5 @@
+/* eslint-disable*/
 import React, { useState, useEffect } from "react";
-// eslint-disable-next-line no-unused-vars
 import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
 import "./roomList.css";
 
@@ -17,6 +17,8 @@ const RoomList = () => {
     },
   ]);
   let [modal, setModal] = useState(Array(room.length).fill(false));
+  let navigate = useNavigate();
+
 
   return (
     <div className="container">
@@ -39,7 +41,7 @@ const RoomList = () => {
                     {room.name}
                   </span>
                   <span className=" col room-person">{room.person} / 5</span>
-                  <button className="btn room-btn white-font">참여하기</button>
+                  <button  onClick={()=> {navigate(`/room/${i}`)}}className="btn room-btn white-font">참여하기</button>
                 </div>
                 {modal[i] ? <RoomMoadal detail={room.detail} /> : null}
               </div>
