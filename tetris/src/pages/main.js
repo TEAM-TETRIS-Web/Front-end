@@ -1,25 +1,39 @@
 /* eslint-disable*/
 import React, { useState, useEffect } from "react";
+import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
 import "./main.css";
+import "./common/color.css";
+
+import Todo from "./todo.js";
 
 const Main = () => {
   let today = new Date();
   let week = ["일", "월", "화", "수", "목", "금", "토"];
   let [focusTime, setFocusTime] = useState("02:10:25");
+  let navigate = useNavigate();
+  let [todo, setTodo] = useState([]);
+  let [todoText, setAddTodoText] = useState("");
 
   return (
-    <div className="container">
+    <div className="container main-page">
       <p className="title-date">
         {today.getMonth() + 1}월 {today.getDate()}일 ({week[today.getDay()]})
       </p>
       {/* 메인창 */}
       <div className="row">
-        <div className="col time-detail-div">
+        <div className="col">
           {/* Focus Time  */}
-          <div className="time-div">
+          <div className="time-div blue-bg">
             <p className="time-title">Focus TIME</p>
-            <p className="time-clock">{focusTime}</p>
-            <input className="time-btn" type="button" value="공부 시작하기" />
+            <p className="time-clock">{focusTime}</p> <br />
+            <input
+              className="time-btn"
+              onClick={() => {
+                navigate("/single/");
+              }}
+              type="button"
+              value="공부 시작하기"
+            />
           </div>
           {/* Focus Time 끝 */}
           {/* 총 공부 시간, 최대 집중 시간, 시작 시간, 종료 시간 */}
@@ -51,32 +65,8 @@ const Main = () => {
               <p className="rank-grade">(전체 543등)</p>
             </div>
           </div>
-        </div>
-
-        {/* Focus To Do */}
-        <div className="toDo-div col">
-          <p className="title">Focus TO DO</p>
-          {/* TodoList 목록 */}
-          <div className="toDoList-div">
-            <div className="toDoList row">
-              <input type="checkbox" className="col-1" />
-              <p className="text col">백준</p>
-            </div>
-          </div>
-          <div className="toDoList-div">
-            <div className="toDoList row">
-              <input type="checkbox" className="col-1" />
-              <p className="text col">토익</p>
-            </div>
-          </div>
-          {/* TodoList 목록 끝 */}
-          {/* 할일 추가 창 */}
-          <div className="AddToDo-div">
-            <input type="text" placeholder="할 일 추가하기" />
-            <input type="button" value="+"/>
-          </div>
-          {/* 할일 추가 창 끝 */}
-        </div>
+        </div>  
+        <Todo />
       </div>
     </div>
   );
