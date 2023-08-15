@@ -1,0 +1,23 @@
+.blue-bg {
+  background: #E8F2FF;
+}
+
+.white-bg {
+  background: white;;
+}
+
+.blue-font {
+  color: #0075ff;
+}
+
+.white-font {
+  color : white;
+}
+
+.none-margin {
+  margin-bottom: 0;
+}
+
+.height-100 {
+  height: 680.784px;
+}

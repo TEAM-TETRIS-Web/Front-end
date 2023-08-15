@@ -1,0 +1,74 @@
+.todo-size {
+  height: 250px;
+}
+
+.room-title-bar {
+  border-bottom: 2px solid #0075ff;
+  margin-bottom: 1.7rem;
+  margin-top: 0.7rem;
+  padding-bottom: 1rem;
+}
+
+.room-title-bar .title {
+  display: flex;
+  color: #0075ff;
+  text-align: center;
+  font-family: LINE Seed Sans KR;
+  font-size: 1.875rem;
+  font-weight: 700;
+  line-height: normal;
+  align-items: center;
+}
+
+.room-title-bar .detail {
+  display: flex;
+  align-items: center;
+  color: #797979;
+  text-align: center;
+  font-family: LINE Seed Sans KR;
+  font-size: 1.5rem;
+  font-weight: 250;
+  line-height: normal;
+}
+
+.link-div {
+  border-radius: 0.625rem;
+  border: 1px solid rgba(94, 96, 99, 0.3);
+  background: #fff;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  color: #000;
+  font-family: LINE Seed Sans KR;
+  font-size: 1.25rem;
+  font-style: normal;
+  font-weight: 250;
+  line-height: normal;
+  margin: 5px 2px;
+}
+
+.link-btn {
+  color: #fff;
+  text-align: center;
+  font-family: LINE Seed Sans KR;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: normal;
+  border-radius: 0.625rem;
+  background: #0075ff;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+  margin: 7px;
+}
+
+.link-label {
+  color: #0075ff;
+  text-align: left;
+  font-family: LINE Seed Sans KR;
+  font-size: 0.9375rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}

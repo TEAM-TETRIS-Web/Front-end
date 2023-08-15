@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
 import "./main.css";
-import "./common/color.css";
+import "./common/common.css";
 
 import Todo from "./todo.js";
 
@@ -66,7 +66,9 @@ const Main = () => {
             </div>
           </div>
         </div>  
-        <Todo />
+        <div className="col height-100">
+          <Todo />
+        </div>
       </div>
     </div>
   );
