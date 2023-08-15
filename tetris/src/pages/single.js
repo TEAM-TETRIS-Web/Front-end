@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
 import "./single.css";
 import Todo from "./todo.js"
-import "./common/color.css";
 
 const Main = () => {
   let today = new Date();
@@ -48,7 +47,9 @@ const Main = () => {
             </div>
             {/* 공부 화면  끝 */}
           </div>
-          <Todo />
+          <div className="col height-100">
+            <Todo />
+          </div>
         </div>
       </div>
     </div>

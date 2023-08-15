@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
 import "./report.css";
-import "./common/color.css";
 
 const Report = () => {
   let [focusTime, setFocusTime] = useState("02 : 10 : 25");

@@ -9,6 +9,7 @@ import {
   useParams,
 } from "react-router-dom";
 import Todo from "./todo.js";
+import "./room.css";
 
 const Room = () => {
   let [focusTime, setFocusTime] = useState(0);
@@ -25,19 +26,21 @@ const Room = () => {
   };
 
   return (
-    <div className="container">
+    <div className="container room-pg">
       {/* 방 이름 및 설명 바 */}
-      <div className="row">
-        <span className="col">알파카의 초식 탐구하기</span>
-        <span className="col">5/5</span>
-        <div className="col">
-          <label>링크 공유하기</label>
-          <div>
-            <span>http://localhost:3000/room/{id}</span>
-            <button onClick={() => handleCopyClipBoard()}className="btn">링크 복사 </button>
+      <div className="row room-title-bar">
+        <span className="col-4 title none-margin">알파카의 초식 탐구하기</span>
+        <span className="col detail">5/5</span>
+        <div className="col-6">
+          <p className="link-label none-margin">링크 공유하기</p>
+          <div className="link-div row">
+            <span className="link col">http://localhost:3000/room/{id}</span>
+            <button onClick={() => handleCopyClipBoard()} className=" col-3 btn link-btn">링크 복사 </button>
           </div>
         </div>
       </div>
+      {/* 방 이름 및 셜명 바 끝 */}
+      {/* 집중 시간 및 todo 시작 */}
       <div className="row">
         <div className="col">
           {/* Focus Time  */}
@@ -55,7 +58,12 @@ const Room = () => {
           </div>
           {/* Focus Time 끝 */}
         </div>
-        <Todo />
+        <div className="todo-size col">
+          <Todo />
+        </div>
+      </div>
+      {/* 집중 시간 및 todo 끝 */}
+      <div>
       </div>
     </div>
   );

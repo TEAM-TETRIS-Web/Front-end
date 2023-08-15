@@ -7,13 +7,13 @@ const Todo = () => {
   let [todoText, setAddTodoText] = useState("");
 
   return (
-    <div className="toDo-div col">
+    <div className="toDo-div">
       <p className="title">Focus TO DO</p>
       {/* TodoList 목록 */}
       <div className="toDoList-div">
         {todo.map(function (text, i) {
           return (
-            <div className="toDoList row">
+            <div className="toDoList row" key={i}>
               <input type="checkbox" className="col-1" />
               <p className="text col">{text}</p>
               <button onClick={() => {

@@ -3,7 +3,7 @@
   border: rgba(0, 117, 255, 0.50) solid 1px;
   padding: 0 0;
   position: relative;
-  height: 680px;
+  height: 100%;
 }
 
 .toDo-div .title {
@@ -15,11 +15,12 @@
   font-weight: 700;
   line-height: normal;
   border-bottom: #0075ff solid 1px;
-  margin-top: 1rem;
+  padding-top: 1rem;
   margin-bottom : 0.5rem;
 }
 
 .toDoList-div {
+  height: calc(100% - 150px);
   overflow: auto;
 }
 

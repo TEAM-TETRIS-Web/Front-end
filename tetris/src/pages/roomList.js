@@ -87,7 +87,7 @@ const RoomList = () => {
             </label>
           </div>
           <br />
-          <button className="btn make-room-btn white-font">방 만들기</button>
+          <button onClick={()=>{navigate(`/room/sample`)}}className="btn make-room-btn white-font">방 만들기</button>
         </div>
       </div>
     </div>
