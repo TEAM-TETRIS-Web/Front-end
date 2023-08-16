@@ -25,10 +25,9 @@ const Single = () => {
       return undefined;
     }
   }
-  
+
   React.useEffect(() => {
     getWebcam((stream => {
-      setPlaying(true);
       videoRef.current.srcObject = stream;
     }));
   }, []);
