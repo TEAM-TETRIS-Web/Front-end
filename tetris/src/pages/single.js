@@ -4,11 +4,36 @@ import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
 import "./single.css";
 import Todo from "./todo.js"
 
-const Main = () => {
+const Single = () => {
   let today = new Date();
   let week = ["일", "월", "화", "수", "목", "금", "토"];
   let [focusTime, setFocusTime] = useState(0);
   let navigate = useNavigate();
+
+  const videoRef = React.useRef(null);
+
+  const getWebcam = (callback) => {
+    try {
+      const constraints = {
+        'video': true,
+        'audio': false
+      }
+      navigator.mediaDevices.getUserMedia(constraints)
+        .then(callback);
+    } catch (err) {
+      console.log(err);
+      return undefined;
+    }
+  }
+  
+  React.useEffect(() => {
+    getWebcam((stream => {
+      setPlaying(true);
+      videoRef.current.srcObject = stream;
+    }));
+  }, []);
+
+
   useEffect(() => {
     const intervalId = setInterval(() => {
       setFocusTime(focusTime => focusTime + 1);
@@ -42,7 +67,9 @@ const Main = () => {
             {/* Focus Time 끝 */}
             {/* 공부 화면 시작 */}
             <div className="icon-div">
-              <div>아이콘 들어가는 곳</div>
+              <div>
+                <video ref={videoRef} autoPlay />
+              </div>
               <div>화면 왜봄 공부나 하셈</div>
             </div>
             {/* 공부 화면  끝 */}
@@ -56,4 +83,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default Single;
