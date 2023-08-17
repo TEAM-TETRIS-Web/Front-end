@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
 import "./single.css";
-import Todo from "./todo.js"
+import Todo from "./todo.js";
 
 const Single = () => {
   let today = new Date();
@@ -15,27 +15,25 @@ const Single = () => {
   const getWebcam = (callback) => {
     try {
       const constraints = {
-        'video': true,
-        'audio': false
-      }
-      navigator.mediaDevices.getUserMedia(constraints)
-        .then(callback);
+        video: true,
+        audio: false,
+      };
+      navigator.mediaDevices.getUserMedia(constraints).then(callback);
     } catch (err) {
       console.log(err);
       return undefined;
     }
-  }
+  };
 
   React.useEffect(() => {
-    getWebcam((stream => {
+    getWebcam((stream) => {
       videoRef.current.srcObject = stream;
-    }));
+    });
   }, []);
-
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setFocusTime(focusTime => focusTime + 1);
+      setFocusTime((focusTime) => focusTime + 1);
     }, 1000);
 
     return () => clearInterval(intervalId);
@@ -53,7 +51,7 @@ const Single = () => {
             {/* Focus Time  */}
             <div className="time-div white-bg">
               <p className="time-title">Focus TIME</p>
-              <p className="time-clock">{focusTime}</p> <br/>
+              <p className="time-clock">{focusTime}</p> <br />
               <input
                 className="time-btn"
                 onClick={() => {
