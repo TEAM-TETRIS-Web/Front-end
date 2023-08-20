@@ -9,10 +9,23 @@ import Todo from "./todo.js";
 const Main = () => {
   let today = new Date();
   let week = ["일", "월", "화", "수", "목", "금", "토"];
-  let [focusTime, setFocusTime] = useState("02:10:25");
+  let [focusTime, setFocusTime] = useState(10412);
+  let [totalTime, setTotalTime] = useState(12412);
+  let [startTime, setStartTime] = useState(40231);
+  let [endTime, setEndTime] = useState(73341);
+
   let navigate = useNavigate();
   let [todo, setTodo] = useState([]);
   let [todoText, setAddTodoText] = useState("");
+
+  const formatTime = (time) => {
+    const hours = Math.floor(time / 3600);
+    const minutes = Math.floor((time / 60) % 60);
+    const seconds = (time % 60).toString().padStart(2, "0");
+    return `${hours.toString().padStart(2, "0")}:${minutes
+      .toString()
+      .padStart(2, "0")}:${seconds}`;
+  };
 
   return (
     <div className="container main-page">
@@ -25,11 +38,16 @@ const Main = () => {
           {/* Focus Time  */}
           <div className="time-div blue-bg">
             <p className="time-title">Focus TIME</p>
-            <p className="time-clock">{focusTime}</p> <br />
+            <p className="time-clock">{formatTime(focusTime)}</p> <br />
             <input
               className="time-btn"
               onClick={() => {
-                navigate("/single/");
+                navigate("/single/", {
+                  state: {
+                    focusTime : focusTime,
+                    totalTime : totalTime,
+                  }
+                });
               }}
               type="button"
               value="공부 시작하기"
@@ -40,19 +58,19 @@ const Main = () => {
           <div className="row timeText-div">
             <div className="col-6">
               <p className="title">총공부시간</p>
-              <p className="time">08:08:08</p>
+              <p className="time">{formatTime(totalTime)}</p>
             </div>
             <div className="col-6">
               <p className="title">최대 집중 시간</p>
-              <p className="time">08:08:08</p>
+              <p className="time">{formatTime(focusTime)}</p>
             </div>
             <div className="col-6">
               <p className="title">시작시간</p>
-              <p className="time">07시 48분</p>
+              <p className="time">{formatTime(startTime)}</p>
             </div>
             <div className="col-6">
               <p className="title">종료시간</p>
-              <p className="time">21시 26분</p>
+              <p className="time">{formatTime(endTime)}</p>
             </div>
           </div>
           {/* 총 공부 시간, 최대 집중 시간, 시작 시간, 종료 시간 끝 */}

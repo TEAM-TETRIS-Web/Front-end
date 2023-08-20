@@ -1,0 +1,98 @@
+.content-div {
+  margin: auto;
+  margin-top: 1rem;
+  border-radius: 1.25rem;
+  width: 61.3125rem;
+  height: 45.375rem;
+}
+
+.content-div .title {
+  padding-top: 3rem;
+  margin: 0 2rem;
+  color: #000;
+  text-align: left;
+  font-family: LINE Seed Sans KR;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: normal;
+  border-bottom: 1px solid rgba(0, 117, 255, 0.5);
+}
+
+.content-div .detail {
+  border: rgba(0, 117, 255, 0.5) solid 1px;
+  border-radius: 5px;
+  margin: 1rem 2rem;
+  text-align: left;
+  padding: 1rem;
+  color: #000;
+  font-family: LINE Seed Sans KR;
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: normal;
+  height: 20rem;
+}
+
+.comment-div {
+  border: rgba(0, 117, 255, 0.5) solid 1px;
+  border-radius: 5px;
+  margin: 1rem 2rem;
+  text-align: center;
+  padding: 0;
+  height: 15rem;
+  position: relative;
+}
+
+.comment {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  background-color: rgba(217, 217, 217, 0.3);
+  margin: 0.7rem;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
+
+.comment .text {
+  color: #000;
+  text-align: left;
+  font-family: Inter;
+  font-size: 1.125rem;
+  font-weight: 500;
+  line-height: normal;
+  margin: 0.3rem;
+}
+
+.addComment-div {
+  border-radius: 0.625rem;
+  border: 2px solid rgba(0, 117, 255, 0.5);
+  position: absolute;
+  width: 96%;
+  bottom: 1rem;
+  margin-left: 2%;
+}
+
+.addComment-div input[type="text"] {
+  border: none;
+  padding: 0 0;
+  margin: 10px;
+  width: 90%;
+  height: 24px;
+}
+
+.addComment-div input[type="text"]:focus {
+  outline: none;
+}
+
+.addComment-div button {
+  display: inline-block;
+  font-size: 1.5rem;
+  width: 24px;
+  height: 35px;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  align-items: center;
+  font-weight: 400;
+  justify-content: center;
+  font-family: LINE Seed Sans KR;
+}

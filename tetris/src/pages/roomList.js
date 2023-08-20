@@ -4,6 +4,8 @@ import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
 import "./roomList.css";
 
 const RoomList = () => {
+  let navigate = useNavigate();
+
   let [room, setRoom] = useState([
     {
       name: "아기 돼지의 집 짓는 방법",
@@ -17,9 +19,15 @@ const RoomList = () => {
     },
   ]);
   let [modal, setModal] = useState(Array(room.length).fill(false));
-  let navigate = useNavigate();
 
+  let [title, setTitle] = useState();
+  let [detail, setDetail] = useState();
 
+  const makeRoom = () => {
+    // 대충 이름과 설명 정보 및 참가한 사람 정보 보내기
+    setTitle("");
+    setDetail("");
+  }
   return (
     <div className="container">
       <div className="roomList-pg row">
@@ -41,7 +49,19 @@ const RoomList = () => {
                     {room.name}
                   </span>
                   <span className=" col room-person">{room.person} / 5</span>
-                  <button  onClick={()=> {navigate(`/room/${i}`)}}className="btn room-btn white-font">참여하기</button>
+                  <button
+                    onClick={() => {
+                      navigate(`/room/${i}`, {
+                        state: {
+                          name : room.name,
+                          person : room.person,                
+                        }
+                      });
+                    }}
+                    className="btn room-btn white-font"
+                  >
+                    참여하기
+                  </button>
                 </div>
                 {modal[i] ? <RoomMoadal detail={room.detail} /> : null}
               </div>
@@ -52,9 +72,18 @@ const RoomList = () => {
         <div className="make-room-div col">
           <p className="make-room-title">방 만들기</p>
           <p className="make-room-detail">방 이름</p>
-          <input type="text" />
+          <input
+            type="text"
+            onChange={(e) => {
+              setTitle(e.target.value);
+            }}
+          />
           <p className="make-room-detail">방 설명</p>
-          <textarea />
+          <textarea
+            onClick={(e) => {
+              setDetail(e.target.value);
+            }}
+          />
           <p className="make-room-detail">공개 여부</p>
           <div
             className="btn-group open-btn-div"
@@ -87,7 +116,19 @@ const RoomList = () => {
             </label>
           </div>
           <br />
-          <button onClick={()=>{navigate(`/room/sample`)}}className="btn make-room-btn white-font">방 만들기</button>
+          <button
+            onClick={() => {
+              navigate(`/room/sample`, {
+                state: {
+                  name : title,
+                  person : 1,                
+                }
+              });
+            }}
+            className="btn make-room-btn white-font"
+          >
+            방 만들기
+          </button>
         </div>
       </div>
     </div>

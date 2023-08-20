@@ -1,0 +1,49 @@
+.content-list-div {
+  border-radius: 1.25rem;
+  width: 61.3125rem;
+  height: 43.3125rem;
+  flex-shrink: 0;
+  margin: auto;
+  margin-top: 3rem;
+}
+
+.content-list-title {
+  color: #0075ff;
+  text-align: center;
+  font-family: LINE Seed Sans KR;
+  font-size: 2.1875rem;
+  font-weight: 700;
+  line-height: normal;
+  padding-top: 1rem;
+}
+
+.content-list {
+  display: flex;
+  align-items: center;
+  width: 58.9375rem;
+  height: 3rem;
+  flex-shrink: 0;
+  background-color: rgba(217, 217, 217, 0.3);
+  margin: auto;
+  margin-top: 1rem;
+  border-radius: 10px;
+}
+
+.content-list .title {
+  color: #000;
+  text-align: left;
+  font-family: Inter;
+  font-size: 1.125rem;
+  font-weight: 550;
+  line-height: normal;
+  margin-left: 2rem;
+}
+
+.content-list .detail {
+  color: #000;
+  text-align: center;
+  font-family: Inter;
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: normal;
+}
