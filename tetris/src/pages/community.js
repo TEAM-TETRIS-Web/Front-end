@@ -23,7 +23,7 @@ const Community = () => {
   let navigate = useNavigate();
 
   return (
-    <div className="blue-bg">
+    <div className="blue-bg" style={{paddingBottom: "10%"}}>
       <div className="container" style={{padding: "0.1px"}}>
         <div className="content-list-div white-bg">
           <p className="content-list-title">
