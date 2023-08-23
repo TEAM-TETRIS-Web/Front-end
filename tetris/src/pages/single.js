@@ -12,12 +12,17 @@ import {
 import "./single.css";
 import Todo from "./todo.js";
 
-const Single = () => {  
+import { authService } from "./../fbase";
+import { dbService } from "../fbase";
+import { doc, updateDoc } from "firebase/firestore";
+
+const Single = () => {
   const location = useLocation();
   let today = new Date();
   let week = ["일", "월", "화", "수", "목", "금", "토"];
   let [focusTime, setFocusTime] = useState(location.state.focusTime);
   let [totalTime, setTotalTime] = useState(location.state.totalTime);
+  let startTime = location.state.startTime;
 
   let navigate = useNavigate();
 
@@ -62,6 +67,32 @@ const Single = () => {
       .padStart(2, "0")}:${seconds}`;
   };
 
+  //공부시간 끝나면 저장
+  useEffect(() => {
+    //로그인 상태 감지
+    authService.onAuthStateChanged((user) => {
+      if (user) {
+        setUserObj(user);
+      }
+    });
+  }, []);
+
+  const todoRdf = doc(dbService, "user", "userNameSample");
+
+  async function onSubmit(event) {
+    await updateDoc(todoRdf, {
+      time : {
+        focus : focusTime,
+        total : totalTime,
+        start : startTime,
+        end : today.getHours() * 3600 + today.getMinutes() * 60 + today.getSeconds(),
+        date : today.getDate(),
+      }
+    });
+  }
+
+
+
   return (
     <div className="blue-bg single-pg">
       <div className="container">
@@ -78,11 +109,12 @@ const Single = () => {
               <input
                 className="time-btn"
                 onClick={() => {
+                  onSubmit();
                   navigate("/report/", {
                     state: {
                       focusTime: focusTime,
                       totalTime: totalTime,
-                    }
+                    },
                   });
                 }}
                 type="button"

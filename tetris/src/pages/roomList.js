@@ -3,16 +3,31 @@ import React, { useState, useEffect } from "react";
 import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
 import "./roomList.css";
 
+import { authService } from "./../fbase";
+import { dbService } from "../fbase";
+import { doc, updateDoc } from "firebase/firestore";
+import Todo from "./todo.js";
+import {
+  addDoc,
+  collection,
+  onSnapshot,
+  query,
+  getDocs,
+  orderBy,
+} from "firebase/firestore";
+
 const RoomList = () => {
   let navigate = useNavigate();
 
   let [room, setRoom] = useState([
     {
+      id: 0,
       name: "아기 돼지의 집 짓는 방법",
       detail: "1)벽돌로 집을 짓는다\n2)콘크리트로 집을 짓는다",
       person: 3,
     },
     {
+      id: 1,
       name: "감자 기중의 민둥맨둥 특강",
       detail: "얘 봄감자가 맛있단다",
       person: 2,
@@ -21,13 +36,51 @@ const RoomList = () => {
   let [modal, setModal] = useState(Array(room.length).fill(false));
 
   let [title, setTitle] = useState();
-  let [detail, setDetail] = useState();
+  let [roomDetail, setDetail] = useState();
+  let [roomMode, setRoomMode] = useState(false);
 
   const makeRoom = () => {
     // 대충 이름과 설명 정보 및 참가한 사람 정보 보내기
     setTitle("");
     setDetail("");
+  };
+
+  useEffect(() => {
+    //로그인 상태 감지
+    authService.onAuthStateChanged((user) => {
+      if (user) {
+        setUserObj(user);
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  //방 가져오기
+  async function getData() {
+    const dbProblems = await getDocs(query(collection(dbService, "room")));
+    dbProblems.forEach((doc) => {
+      const roomObj = {
+        ...doc.data(),
+        id: doc.id,
+      };
+      if (roomObj.mode) {
+        setRoom((prev) => [roomObj, ...prev]);
+      }
+    });
   }
+
+  //방 만들기
+  async function addRoom(event) {
+    const docRef = await addDoc(collection(dbService, "room"), {
+      name: title,
+      detail: roomDetail,
+      mode : roomMode, 
+    });
+  }
+
   return (
     <div className="container">
       <div className="roomList-pg row">
@@ -51,11 +104,11 @@ const RoomList = () => {
                   <span className=" col room-person">{room.person} / 5</span>
                   <button
                     onClick={() => {
-                      navigate(`/room/${i}`, {
+                      navigate(`/room/${room.id}`, {
                         state: {
-                          name : room.name,
-                          person : room.person,                
-                        }
+                          name: room.name,
+                          person: room.person,
+                        },
                       });
                     }}
                     className="btn room-btn white-font"
@@ -80,6 +133,9 @@ const RoomList = () => {
           />
           <p className="make-room-detail">방 설명</p>
           <textarea
+            onChange={(e) => {
+              setDetail(e.target.value);
+            }}
             onClick={(e) => {
               setDetail(e.target.value);
             }}
@@ -95,10 +151,16 @@ const RoomList = () => {
               className="btn-check"
               name="btnradio"
               id="btnradio1"
-              autocomplete="off"
-              checked
+              autoComplete="off"
+              defaultChecked
+              onChange={() => {
+                setRoomMode(false);
+              }}
             />
-            <label className="open-btn btn btn-outline-primary" for="btnradio1">
+            <label
+              className="open-btn btn btn-outline-primary"
+              htmlFor="btnradio1"
+            >
               비공개
             </label>
             <input
@@ -106,11 +168,14 @@ const RoomList = () => {
               className="btn-check"
               name="btnradio"
               id="btnradio2"
-              autocomplete="off"
+              autoComplete="off"
+              onChange={() => {
+                setRoomMode(true);
+              }}
             />
             <label
               className=" open-btn btn btn-outline-primary"
-              for="btnradio2"
+              htmlFor="btnradio2"
             >
               공개
             </label>
@@ -118,11 +183,12 @@ const RoomList = () => {
           <br />
           <button
             onClick={() => {
+              addRoom();
               navigate(`/room/sample`, {
                 state: {
-                  name : title,
-                  person : 1,                
-                }
+                  name: title,
+                  person: 1,
+                },
               });
             }}
             className="btn make-room-btn white-font"
