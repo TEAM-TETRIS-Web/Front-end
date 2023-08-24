@@ -19,26 +19,13 @@ import {
 const RoomList = () => {
   let navigate = useNavigate();
 
-  let [room, setRoom] = useState([
-    {
-      id: 0,
-      name: "아기 돼지의 집 짓는 방법",
-      detail: "1)벽돌로 집을 짓는다\n2)콘크리트로 집을 짓는다",
-      person: 3,
-    },
-    {
-      id: 1,
-      name: "감자 기중의 민둥맨둥 특강",
-      detail: "얘 봄감자가 맛있단다",
-      person: 2,
-    },
-  ]);
+  let [room, setRoom] = useState([]);
   let [modal, setModal] = useState(Array(room.length).fill(false));
 
   let [title, setTitle] = useState();
   let [roomDetail, setDetail] = useState();
   let [roomMode, setRoomMode] = useState(false);
-
+  let [userObj, setUserObj] = useState(null);
   useEffect(() => {
     //로그인 상태 감지
     authService.onAuthStateChanged((user) => {
@@ -71,8 +58,10 @@ const RoomList = () => {
     const docRef = await addDoc(collection(dbService, "room"), {
       name: title,
       detail: roomDetail,
-      mode : roomMode, 
+      mode : roomMode,
+      user : [],
     });
+    navigate(`/room/${docRef.id}`,);
   }
 
   const makeRoom = () => {
@@ -100,7 +89,7 @@ const RoomList = () => {
                   >
                     {room.name}
                   </span>
-                  <span className=" col room-person">{room.person} / 5</span>
+                  <span className=" col room-person"></span>
                   <button
                     onClick={() => {
                       navigate(`/room/${room.id}`, {
@@ -183,12 +172,6 @@ const RoomList = () => {
           <button
             onClick={() => {
               addRoom();
-              navigate(`/room/sample`, {
-                state: {
-                  name: title,
-                  person: 1,
-                },
-              });
             }}
             className="btn make-room-btn white-font"
           >

@@ -17,17 +17,9 @@ import {
 const Todo = (props) => {
   let [todo, setTodo] = useState([]);
   let [todoText, setAddTodoText] = useState("");
-  const [userObj, setUserObj] = useState(null);
+  const [userObj, setUserObj] = useState(props.userObj);
   let [data, setData] = useState();
-
-  useEffect(() => {
-    //로그인 상태 감지
-    authService.onAuthStateChanged((user) => {
-      if (user) {
-        setUserObj(user);
-      }
-    });
-  }, []);
+  let [id, setId] = useState();
 
   useEffect(() => {
     getData();
@@ -39,16 +31,18 @@ const Todo = (props) => {
     dbProblems.forEach((doc) => {
       const dataObj = {
         ...doc.data(),
+        id: doc.id,
       };
-      if (dataObj.email === "sample@gmail.com") {
+      if (dataObj.email === userObj.email) {
         setTodo(dataObj.todos);
         setData(dataObj);
+        setId(dataObj.id);
       }
     });
   }
 
   //todo update
-  const todoRdf = doc(dbService, "user", "userNameSample");
+  const todoRdf = doc(dbService, "user", `${id}`);
 
   async function onSubmit(event) {
     await setTodo([todoText, ...todo]);
@@ -65,7 +59,6 @@ const Todo = (props) => {
         {todo.map(function (text, i) {
           return (
             <div className="toDoList row" key={i}>
-              <input type="checkbox" className="col-1" />
               <p className="text col">{text}</p>
               <button
                 onClick={() => {

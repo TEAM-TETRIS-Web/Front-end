@@ -1,117 +1,97 @@
-.login-detail{
-    margin-top : 330px;
-    margin-left : 200px;
-    display: flex;
-    width: 360px;
-    height: 134px;
-    flex-direction: column;
-    justify-content: center;
-    flex-shrink: 0;
-    color: #0075FF;
-    font-family: LINE Seed Sans KR;
-    font-size: 45px;
-    font-weight: 400;
-    line-height: normal;
-    text-align: left;
+.login-detail {
+  flex-shrink: 0;
+  color: #0075ff;
+  font-family: LINE Seed Sans KR;
+  font-size: 45px;
+  font-weight: 400;
+  line-height: normal;
 }
 
-.login-main{
-    margin-top : -10px;
-    margin-left : 200px;
-    display: flex;
-    width: 360px;
-    height: 76px;
-    flex-direction: column;
-    justify-content: center;
-    flex-shrink: 0;
-    color: #0075FF;
-    font-family: LINE Seed Sans KR;
-    font-size: 60px;
-    font-weight: 700;
-    line-height: normal;
-    text-align: left;
+.focus-img {
+  height: 0%;
 }
 
-.login-box{
-    margin-top : 5px;
-    margin-left : -130px;
-    padding-left : 10px;
-    width: 410px;
-    height: 64px;
-    flex-shrink: 0;
-    border-radius: 10px;
-    border: 2px solid #0075FF;
-    color: #6F6F6F;
-    font-family: LINE Seed Sans KR;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 250;
-    line-height: normal;
-    outline:none;
+.login-div {
+  text-align: left;
 }
 
-.login-button{
-    margin-top : 10px;
-    margin-bottom: 10px;
-    margin-left : -130px;
-    width: 174.815px;
-    height: 40px;
-    flex-shrink: 0;
-    border-radius: 5px;
-    background: #0075FF;
-    color: #FFF;
+.main-div {
+  margin-left: 20px;
+}
+.login-main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #0075ff;
+  font-family: LINE Seed Sans KR;
+  font-size: 60px;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.login-div input {
+  margin-top: 5px;
+  padding-left: 10px;
+  width: 410px;
+  height: 60px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  border: 2px solid #0075ff;
+  color: #6f6f6f;
+  font-family: LINE Seed Sans KR;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 250;
+  line-height: normal;
+  outline: none;
+}
+
+.login-button {
+  margin: 10px 0;
+  width: 410px;
+  height: 60px;
+  flex-shrink: 0;
+  border-radius: 5px;
+  background: #0075ff;
+  color: #fff;
+  text-align: center;
+  font-family: LINE Seed Sans KR;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.detail-bar {
+  width: 410px;
+  text-align: center;
+  color: #0075ff;
+  font-family: LINE Seed Sans KR;
+  font-size: 0.9375rem;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.title-div {
+  margin-top: 20%;
+  text-align: left;
+}
+@media screen and (max-width: 1200px) {
+  .focus-img {
+    display: none;
+  }
+  .login-div,
+  .login-detail,
+  .login-main,
+  .title-div,
+  .login-detail {
     text-align: center;
-    font-family: LINE Seed Sans KR;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-}
-
-.sign-in-button{
-    margin-top : 10px;
-    margin-bottom:10px;
-    margin-left : 5px;
-    width: 174.815px;
-    height: 40px;
-    flex-shrink: 0;
-    border-radius: 5px;
-    border: 1px solid #0075FF;
-    color: #0075FF;
-    text-align: center;
-    font-family: LINE Seed Sans KR;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-}
-
-.find-id{
-    margin-left : -120px;
-    color: #0075FF;
-    font-family: LINE Seed Sans KR;
-    font-size: 15px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-}
-
-.find{
-    margin-left : 10px;
-    color: #0075FF;
-    font-family: LINE Seed Sans KR;
-    font-size: 15px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-}
-
-.find-pw{
-    margin-left : 10px;
-    color: #0075FF;
-    font-family: LINE Seed Sans KR;
-    font-size: 15px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
+  }
+  .detail-bar {
+    width: 100%;
+  }
+  .title-div {
+    margin-top: 10%;
+  }
 }

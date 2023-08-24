@@ -21,3 +21,29 @@
   background: white;
   border : none;
 }
+
+.icon-div {
+  padding-top : 0.1px;
+}
+
+.video-div {
+  margin: 20px;
+}
+.icon-div .icon-comment-div {
+  text-align: center;
+  margin : 20px;
+  margin-top: 2rem;
+  background-color: #92C4FF;
+  border-radius: 50px;
+}
+.icon-div .icon-comment {
+  padding:10px;
+  height: 2.8125rem;
+  color: #000;
+text-align: center;
+font-family: LINE Seed Sans KR;
+font-size: 1.3rem;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+}

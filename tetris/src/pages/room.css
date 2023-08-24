@@ -72,3 +72,8 @@
   font-weight: 400;
   line-height: normal;
 }
+
+.user-img {
+  width: 65%;
+  margin : 10% auto !important;
+}

@@ -1,0 +1,21 @@
+.profile {
+  width: 15rem;
+  border-radius: 70%;
+  overflow: hidden;
+  margin: auto;
+}
+
+.profile-name {
+  color: #0075FF;
+text-align: center;
+font-family: LINE Seed Sans KR;
+font-size: 1.5rem;
+font-weight: 700;
+line-height: normal;
+}
+
+.profile-name-div {
+  border-bottom : 1.5px solid #000000;
+  width: 20rem;
+  margin: 2rem auto;
+}

@@ -2,7 +2,6 @@ import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
 import Navigation from "./Navigation";
 import Main from "../pages/main";
 import Login from "../pages/login";
-import Signin from "../pages/signin";
 import Single from "../pages/single";
 import Report from "../pages/report";
 import RoomList from "../pages/roomList";
@@ -16,27 +15,25 @@ import Mypage from "../pages/mypage";
 import React, { useState, useEffect } from "react";
 
 function AppRouter(props) {
-  // let isLoggedIn = props.isLoggedIn;
-  let isLoggedIn = true;
+  let isLoggedIn = props.isLoggedIn;
   
   return (
     <>
       {isLoggedIn ? <Navigation isLoggedIn={props.isLoggedIn} /> : <></>}
       <Routes>
-        {isLoggedIn ? <></> : <Route path="/login" element={<Login/>} />}
-        {isLoggedIn ? <></> : <Route path="/signin" element={<Signin/>} />}
-        {isLoggedIn ? <Route path="/" element={<Main />} /> : <></>}
-        {isLoggedIn ? <Route path="/single" element={<Single />} /> : <></>}
+        {isLoggedIn ? <></> : <Route path="/" element={<Login/>} />}
+        {isLoggedIn ? <Route path="/" element={<Main userObj={props.userObj}/>} /> : <></>}
+        {isLoggedIn ? <Route path="/single" element={<Single userObj={props.userObj} />} /> : <></>}
         {isLoggedIn ? <Route path="/report" element={<Report />} /> : <></>}
         {isLoggedIn ? <Route path="/roomlist" element={<RoomList />} /> : <></>}
-        {isLoggedIn ? <Route path="/room/:id" element={<Room />} /> : <></>}
+        {isLoggedIn ? <Route path="/room/:url" element={<Room userObj={props.userObj}/>} /> : <></>}
         {isLoggedIn ? (
           <Route path="/community" element={<Community />} />
         ) : (
           <></>
         )}
         {isLoggedIn ? (
-          <Route path="/community/:id" element={<Content />} />
+          <Route path="/community/:url" element={<Content />} />
         ) : (
           <></>
         )}
@@ -45,7 +42,7 @@ function AppRouter(props) {
         ) : (
           <></>
         )}
-        {isLoggedIn ? <Route path="/mypage" element={<Mypage />} /> : <></>}
+        {isLoggedIn ? <Route path="/mypage" element={<Mypage userObj={props.userObj}/>} /> : <></>}
       </Routes>
     </>
   );

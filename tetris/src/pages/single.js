@@ -15,15 +15,24 @@ import Todo from "./todo.js";
 import { authService } from "./../fbase";
 import { dbService } from "../fbase";
 import { doc, updateDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  onSnapshot,
+  query,
+  getDocs,
+  orderBy,
+} from "firebase/firestore";
 
-const Single = () => {
+const Single = (props) => {
   const location = useLocation();
   let today = new Date();
   let week = ["일", "월", "화", "수", "목", "금", "토"];
   let [focusTime, setFocusTime] = useState(location.state.focusTime);
   let [totalTime, setTotalTime] = useState(location.state.totalTime);
-  let startTime = location.state.startTime;
-
+  let [startTime, setStartTime] = useState(location.state.startTime);
+  let id = location.state.id;
+  const [userObj, setUserObj] = useState(props.userObj);
   let navigate = useNavigate();
 
   const videoRef = React.useRef(null);
@@ -42,11 +51,12 @@ const Single = () => {
   };
 
   // show video
-  // React.useEffect(() => {
-  //   getWebcam((stream) => {
-  //     videoRef.current.srcObject = stream;
-  //   });
-  // }, []);
+  useEffect(() => {
+    getData();
+    // getWebcam((stream) => {
+    //   videoRef.current.srcObject = stream;
+    // });
+  }, []);
 
   // 공부시간 증가
   useEffect(() => {
@@ -67,31 +77,36 @@ const Single = () => {
       .padStart(2, "0")}:${seconds}`;
   };
 
-  //공부시간 끝나면 저장
-  useEffect(() => {
-    //로그인 상태 감지
-    authService.onAuthStateChanged((user) => {
-      if (user) {
-        setUserObj(user);
-      }
-    });
-  }, []);
-
-  const todoRdf = doc(dbService, "user", "userNameSample");
-
-  async function onSubmit(event) {
-    await updateDoc(todoRdf, {
-      time : {
-        focus : focusTime,
-        total : totalTime,
-        start : startTime,
-        end : today.getHours() * 3600 + today.getMinutes() * 60 + today.getSeconds(),
-        date : today.getDate(),
+  //사용자 시간 가져오기
+  async function getData() {
+    const dbProblems = await getDocs(query(collection(dbService, "user")));
+    dbProblems.forEach((doc) => {
+      const dataObj = {
+        ...doc.data(),
+        id: doc.id,
+      };
+      if (dataObj.email === userObj.email) {
+        setStartTime(dataObj.time.start);
       }
     });
   }
 
-
+  //사용자 시간 저장
+  const todoRdf = doc(dbService, "user", `${id}`);
+  async function onSubmit(event) {
+    await updateDoc(todoRdf, {
+      time: {
+        focus: focusTime,
+        total: totalTime,
+        start: startTime,
+        end:
+          today.getHours() * 3600 +
+          today.getMinutes() * 60 +
+          today.getSeconds(),
+        date: today.getDate(),
+      },
+    });
+  }
 
   return (
     <div className="blue-bg single-pg">
@@ -124,13 +139,15 @@ const Single = () => {
             {/* Focus Time 끝 */}
             {/* 공부 화면 시작 */}
             <div className="icon-div">
-              <div>{/* <video ref={videoRef} autoPlay /> */}</div>
-              <div>화면 왜봄 공부나 하셈</div>
+              <div className="video-div">{/* <video ref={videoRef} autoPlay /> */}</div>
+              <div className="icon-comment-div">
+                <p className="icon-comment none-margin">화면 왜봄 공부나 하셈</p>
+              </div>
             </div>
             {/* 공부 화면  끝 */}
           </div>
           <div className="col height-100">
-            <Todo />
+            <Todo userObj={userObj} />
           </div>
         </div>
       </div>
