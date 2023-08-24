@@ -5,6 +5,10 @@ import "./login.css";
 import "./common/common.css";
 import focustudy from "./../assets/focustudy.jpg";
 
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import Modal from "react-bootstrap/Modal";
+
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -29,7 +33,10 @@ const Login = () => {
   const [newAccount, setNewAccount] = useState(false);
   const [error, setError] = useState("");
   const [name, setName] = useState("");
+  const [show, setShow] = useState(false);
 
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const auth = getAuth();
   const onChange = (event) => {
     const {
@@ -113,7 +120,6 @@ const Login = () => {
                 required
                 value={name}
                 onChange={onChange}
-                //   placeholder="아이디를 입력해주세요"
               />
             ) : null}
             <input
@@ -123,7 +129,6 @@ const Login = () => {
               required
               value={email}
               onChange={onChange}
-              //   placeholder="아이디를 입력해주세요"
             />
             <br />
             <input
@@ -133,7 +138,6 @@ const Login = () => {
               required
               value={password}
               onChange={onChange}
-              //   placeholder="비밀번호를 입력해주세요"
             />{" "}
             <br />
             <button className="login-button btn" onClick={onSubmit}>
@@ -147,33 +151,58 @@ const Login = () => {
                 }}
               >
                 {newAccount ? "로그인" : "새로운 계정 만들기"}
-              </span>{"   "}
-              | {"   "} 
-              <span
-                onClick={() => {
-                  sendPasswordResetEmail(auth, email)
-                    .then(() => {
-                      // Password reset email sent!
-                      // ..
-                    })
-                    .catch((error) => {
-                      const errorCode = error.code;
-                      const errorMessage = error.message;
-                      // ..
-                    });
-                }}
-              >
-                비밀번호 찾기
               </span>
+              {"   "}| {"   "}
+              <span onClick={handleShow}>비밀번호 찾기</span>
+              <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                  <Modal.Title>비밀번호 찾기</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <Form>
+                    <Form.Group
+                      className="mb-3"
+                      controlId="exampleForm.ControlInput1"
+                    >
+                      <Form.Label>Email address</Form.Label>
+                      <Form.Control
+                        type="email"
+                        placeholder="name@example.com"
+                        autoFocus
+                      />
+                    </Form.Group>
+                  </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button variant="secondary" onClick={handleClose}>
+                    닫기
+                  </Button>
+                  <Button
+                    variant="primary"
+                    onClick={() => {
+                      handleClose();
+                      sendPasswordResetEmail(auth, email)
+                        .then(() => {
+                          // Password reset email sent!
+                          // ..
+                        })
+                        .catch((error) => {
+                          const errorCode = error.code;
+                          const errorMessage = error.message;
+                          // ..
+                        });
+                      alert("비밀번호 재설정 이메일이 전송되었습니다.");
+                    }}
+                  >
+                    전송
+                  </Button>
+                </Modal.Footer>
+              </Modal>
             </div>
           </div>
-          {/* <button className="find-id btn">아이디 찾기</button>
-            <span className="find">|</span>
-            <button className="find-pw btn">비밀번호 찾기</button> */}
         </div>
       </div>
     </div>
   );
 };
-
 export default Login;
