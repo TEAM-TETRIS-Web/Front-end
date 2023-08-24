@@ -58,6 +58,7 @@ const Single = (props) => {
     // });
   }, []);
 
+
   // 공부시간 증가
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -139,7 +140,7 @@ const Single = (props) => {
             {/* Focus Time 끝 */}
             {/* 공부 화면 시작 */}
             <div className="icon-div">
-              <div className="video-div">{/* <video ref={videoRef} autoPlay /> */}</div>
+              <div className="video-div">{/* <video ref={videoRef} width="100%" autoPlay /> */}</div>
               <div className="icon-comment-div">
                 <p className="icon-comment none-margin">화면 왜봄 공부나 하셈</p>
               </div>
