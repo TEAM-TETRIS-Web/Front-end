@@ -39,12 +39,6 @@ const RoomList = () => {
   let [roomDetail, setDetail] = useState();
   let [roomMode, setRoomMode] = useState(false);
 
-  const makeRoom = () => {
-    // 대충 이름과 설명 정보 및 참가한 사람 정보 보내기
-    setTitle("");
-    setDetail("");
-  };
-
   useEffect(() => {
     //로그인 상태 감지
     authService.onAuthStateChanged((user) => {

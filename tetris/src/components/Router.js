@@ -23,6 +23,8 @@ function AppRouter(props) {
     <>
       {isLoggedIn ? <Navigation isLoggedIn={props.isLoggedIn} /> : <></>}
       <Routes>
+        {isLoggedIn ? <></> : <Route path="/login" element={<Login/>} />}
+        {isLoggedIn ? <></> : <Route path="/signin" element={<Signin/>} />}
         {isLoggedIn ? <Route path="/" element={<Main />} /> : <></>}
         {isLoggedIn ? <Route path="/single" element={<Single />} /> : <></>}
         {isLoggedIn ? <Route path="/report" element={<Report />} /> : <></>}
