@@ -55,14 +55,18 @@ const Single = (props) => {
   // show video
   useEffect(() => {
     getData();
-    // getWebcam((stream) => {
-    //   videoRef.current.srcObject = stream;
-    // });
+    getWebcam((stream) => {
+      videoRef.current.srcObject = stream;
+    });
   }, []);
 
   //집중도 체크 모델
   const URL = "https://teachablemachine.withgoogle.com/models/H3D75BKiP/";
   let model, webcam, ctx, labelContainer, maxPredictions;
+
+  //폰 체크
+  const URL2 = "https://teachablemachine.withgoogle.com/models/L7ABWu3p4/";
+  let model2, maxPredictions2;
 
   async function init() {
     const modelURL = URL + "model.json";
@@ -71,17 +75,23 @@ const Single = (props) => {
     model = await tmPose.load(modelURL, metadataURL);
     maxPredictions = model.getTotalClasses();
 
+    //폰 체크
+    const modelURL2 = URL2 + "model.json";
+    const metadataURL2 = URL2 + "metadata.json";
+
+    model2 = await tmImage.load(modelURL2, metadataURL2);
+    maxPredictions2 = model2.getTotalClasses();
+
     // Convenience function to setup a webcam
     const size = 200;
     const flip = true;
-    webcam = new tmPose.Webcam(size, size, flip); 
+    webcam = new tmPose.Webcam(size, size, flip);
     await webcam.setup();
     await webcam.play();
-    window.requestAnimationFrame(loop);
   }
 
   async function loop(timestamp) {
-    webcam.update(); // update the webcam frame
+    await webcam.update(); // update the webcam frame
     await predict();
   }
 
@@ -89,14 +99,30 @@ const Single = (props) => {
     const { pose, posenetOutput } = await model.estimatePose(webcam.canvas);
     const prediction = await model.predict(posenetOutput);
 
-    prediction[0] > 0.4 ? setIsFocus(true) : isFocus(false);
-    
+    prediction[0] > 0.4 ? setIsFocus(true) : setIsFocus(false);
+
     for (let i = 0; i < maxPredictions; i++) {
       const classPrediction =
         prediction[i].className + ": " + prediction[i].probability.toFixed(2);
       console.log(classPrediction);
     }
+    // predict can take in an image, video or canvas html element
+    const prediction2 = await model2.predict(webcam.canvas);
+    for (let i = 0; i < maxPredictions2; i++) {
+      const classPrediction =
+        prediction2[i].className + ": " + prediction2[i].probability.toFixed(2);
+      console.log(classPrediction);
+    }  
   }
+
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      window.requestAnimationFrame(loop);
+    }, 7000);
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   //집중도 체크 모델 끝 ///////
 
@@ -150,6 +176,8 @@ const Single = (props) => {
     });
   }
 
+  init();
+
   return (
     <div className="blue-bg single-pg">
       <div className="container">
@@ -182,12 +210,7 @@ const Single = (props) => {
             {/* 공부 화면 시작 */}
             <div className="icon-div">
               <div className="video-div">
-                {/* <video ref={videoRef} width="100%" autoPlay /> */}
-              </div>
-              <div className="icon-comment-div">
-                <p className="icon-comment none-margin">
-                  화면 왜봄 공부나 하셈
-                </p>
+                <video ref={videoRef} width="80%" autoPlay />
               </div>
             </div>
             {/* 공부 화면  끝 */}
