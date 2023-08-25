@@ -78,9 +78,31 @@
 }
 .user-img {
   width: 65%;
-  margin : 10% auto !important;
+  margin: 10% auto !important;
+}
+
+.plus-img {
+  width: 40%;
+  margin: 30% auto !important;
 }
 
 .card-title {
-  /* background: ; */
+  color: #0075ff;
+  text-align: center;
+  font-family: LINE Seed Sans KR;
+  font-size: 1.3rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.card-text {
+  border: 2px solid #0075ff;
+  border-radius: 30px;
+  color: #0075ff;
+  text-align: center;
+  font-family: LINE Seed Sans KR;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: normal;
 }

@@ -190,7 +190,7 @@ const Single = (props) => {
             {/* Focus Time  */}
             <div className="time-div white-bg">
               <p className="time-title">Focus TIME</p>
-              <p className="time-clock">{formatTime(focusTime)}</p> <br />
+              <p className="time-clock">{formatTime(totalTime)}</p> <br />
               <input
                 className="time-btn"
                 onClick={() => {

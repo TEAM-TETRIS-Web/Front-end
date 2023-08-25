@@ -27,6 +27,7 @@ import "./common/common.css";
 import sStudy from "./../assets/s-study.jpg";
 import mStudy from "./../assets/m-study.jpg";
 import lStudy from "./../assets/l-study.jpg";
+import plus from "./../assets/plus.png";
 
 const Room = (props) => {
   let [focusTime, setFocusTime] = useState(0);
@@ -38,14 +39,37 @@ const Room = (props) => {
   let [id, setId] = useState();
   const location = useLocation();
   let today = new Date();
-  let [name, setName] = useState("");
+  let [roomName, setName] = useState("");
   let [users, setUsers] = useState([]);
-
+  let [roomObj, setRoomObj] = useState();
+  let [userName, setUserName] = useState();
   let [startTime, setStartTime] = useState();
+
+
   useEffect(() => {
     getRoomData();
     getTimeData();
-  }, []);
+  }, [])
+  
+  // useEffect(() => {
+  //   addUser();
+  // }, [])
+
+  
+  //방 인원 추가
+  async function addUser() {
+    const roomRDF = doc(dbService, "room", `${url}`);
+    let isFound = users.some(data => data.name == userName);
+    if (!isFound) {
+      setUsers([{ name: userName, time: totalTime }, ...users]);
+      await updateDoc(roomRDF, {
+        user: [{ name: userName, time: totalTime }, ...users],
+      });
+    }
+    else {
+      console.log("이미 추가된 사용자입니다.");
+    }
+  }
 
   //방 정보 가져오기
   async function getRoomData() {
@@ -56,12 +80,35 @@ const Room = (props) => {
         id: doc.id,
       };
       if (dataObj.id == url) {
-        console.log(dataObj.user);
         setName(dataObj.name);
         setUsers(dataObj.user);
       }
     });
   }
+  
+  //방에서 나갈 때 사용자 제거
+  async function delUser(event) {
+    let isFound = users.some(data => data.name == userName);
+    if (isFound) {
+      let i = users.findIndex((e) => e.name == userName);
+      let newUsers = [...users];
+      newUsers.splice(i, 1);
+      setUsers(newUsers);
+
+      await updateDoc(roomRDF, {
+        user: newUsers,
+      });
+
+      if (users.length == 0) {
+
+      }
+    }
+    else {
+      console.log("없는 사용자입니다.");
+    }
+  }
+
+  
   //사용자 시간 가져오기
   async function getTimeData() {
     const dbinfo = await getDocs(query(collection(dbService, "user")));
@@ -71,6 +118,7 @@ const Room = (props) => {
         id: doc.id,
       };
       if (dataObj.email === userObj.email) {
+        setUserName(dataObj.name);
         setId(dataObj.id);
         setEndTime(dataObj.time.end);
         setStartTime(dataObj.time.start);
@@ -154,12 +202,11 @@ const Room = (props) => {
       .toString()
       .padStart(2, "0")}:${seconds}`;
   };
-
   return (
     <div className="container room-pg">
       {/* 방 이름 및 설명 바 */}
       <div className="row room-title-bar">
-        <span className="col-5 title none-margin">{name}</span>
+        <span className="col-5 title none-margin">{roomName}</span>
         <div className="col-7">
           <p className="link-label none-margin">링크 공유하기</p>
           <div className="link-div row">
@@ -180,10 +227,11 @@ const Room = (props) => {
           {/* Focus Time  */}
           <div className="time-div white-bg">
             <p className="time-title">Focus TIME</p>
-            <p className="time-clock">{formatTime(focusTime)}</p> <br />
+            <p className="time-clock">{formatTime(totalTime)}</p> <br />
             <input
               className="time-btn"
               onClick={() => {
+                delUser();
                 onSubmit();
                 navigate("/report/", {
                   state: {
@@ -221,16 +269,17 @@ const Room = (props) => {
                 />
                 <div className="card-body">
                   <h5 className="card-title">{person.name}</h5>
-                  <p className="card-text">{formatTime(person.time)}</p>
+                  <p className="card-text none-margine">
+                    {formatTime(person.time)}
+                  </p>
                 </div>
               </div>
             );
           })}
         <div className="col-2 card user-card">
-          <FontAwesomeIcon className="card-img-top" icon="fa-regular fa-circle-plus" />
+          <img src={plus} onClick={addUser} className="cord-img plus-img" />
           <div className="card-body">
-            <h5 className="card-title blue-bg"></h5>
-            <p className="card-text">{}</p>
+            <h5 className="card-title"> 참가하기</h5>
           </div>
         </div>
       </div>
