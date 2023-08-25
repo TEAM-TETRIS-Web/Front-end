@@ -44,12 +44,81 @@ const Room = (props) => {
   let [roomObj, setRoomObj] = useState();
   let [userName, setUserName] = useState();
   let [startTime, setStartTime] = useState();
+  let isFocus = true;
+
+  //집중도 체크 모델
+  const URL = "https://teachablemachine.withgoogle.com/models/H3D75BKiP/";
+  let model, webcam, ctx, labelContainer, maxPredictions;
+
+  //폰 체크
+  const URL2 = "https://teachablemachine.withgoogle.com/models/L7ABWu3p4/";
+  let model2, maxPredictions2;
+
+  async function init() {
+    const modelURL = URL + "model.json";
+    const metadataURL = URL + "metadata.json";
+
+    model = await tmPose.load(modelURL, metadataURL);
+    maxPredictions = model.getTotalClasses();
+
+    //폰 체크
+    const modelURL2 = URL2 + "model.json";
+    const metadataURL2 = URL2 + "metadata.json";
+
+    model2 = await tmImage.load(modelURL2, metadataURL2);
+    maxPredictions2 = model2.getTotalClasses();
+
+    // Convenience function to setup a webcam
+    const size = 200;
+    const flip = true;
+    webcam = new tmPose.Webcam(size, size, flip);
+    await webcam.setup();
+    await webcam.play();
+  }
+
+  async function loop(timestamp) {
+    await webcam.update(); // update the webcam frame
+    await predict();
+  }
+
+  async function predict() {
+    const { pose, posenetOutput } = await model.estimatePose(webcam.canvas);
+    const prediction = await model.predict(posenetOutput);
+
+    
+    for (let i = 0; i < maxPredictions; i++) {
+      const classPrediction =
+      prediction[i].className + ": " + prediction[i].probability.toFixed(2);
+      console.log(classPrediction);
+    }
+    // predict can take in an image, video or canvas html element
+    const prediction2 = await model2.predict(webcam.canvas);
+    for (let i = 0; i < maxPredictions2; i++) {
+      const classPrediction =
+      prediction2[i].className + ": " + prediction2[i].probability.toFixed(2);
+      console.log(classPrediction);
+    }  
+    (prediction[0].probability > 0.4 && prediction2[0].probability < 0.7 ) ? isFocus = true : isFocus = false;
+  }
 
 
   useEffect(() => {
-    getRoomData();
+    const intervalId = setInterval(() => {
+      window.requestAnimationFrame(loop);
+    }, 7000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
+  //집중도 체크 모델 끝 ///////
+  
+  useEffect(() => {
     getTimeData();
   }, [])
+
+  useEffect(() => {
+    getRoomData();
+  })
   
   // useEffect(() => {
   //   addUser();
@@ -88,6 +157,8 @@ const Room = (props) => {
   
   //방에서 나갈 때 사용자 제거
   async function delUser(event) {
+    
+    const roomRDF = doc(dbService, "room", `${url}`);
     let isFound = users.some(data => data.name == userName);
     if (isFound) {
       let i = users.findIndex((e) => e.name == userName);
@@ -184,7 +255,10 @@ const Room = (props) => {
   // 공부시간 증가
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setFocusTime((focusTime) => focusTime + 1);
+      const intervalId = setInterval(() => {
+      isFocus ? setFocusTime((focusTime) => focusTime + 1) : 0;
+      setTotalTime((totalTime) => totalTime + 1);
+    }, 1000);
       setTotalTime((totalTime) => totalTime + 1);
       setUsers((users) =>
         users.map((user) => ({ ...user, time: user.time + 1 }))
