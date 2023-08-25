@@ -13,14 +13,12 @@ import "./report.css";
 
 const Report = () => {
   const location = useLocation();
-
+  let navigate = useNavigate();
   const focusTime = location.state.focusTime;
   const totalTime = location.state.totalTime;
-  
-  let navigate = useNavigate();
   let [percentage, setPercentage] = useState(Math.floor((focusTime / totalTime) * 100));
 
-
+  // 시간 형식 출력 함수
   const formatTime = (time) => {
     const hours = Math.floor(time / 3600);
     const minutes = Math.floor((time / 60) % 60);

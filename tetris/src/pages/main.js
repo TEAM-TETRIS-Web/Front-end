@@ -3,8 +3,6 @@ import React, { useState, useEffect } from "react";
 import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
 import "./main.css";
 import "./common/common.css";
-
-import { authService } from "./../fbase";
 import { dbService } from "../fbase";
 import { doc, updateDoc } from "firebase/firestore";
 import Todo from "./todo.js";
@@ -19,18 +17,17 @@ import {
 
 const Main = (props) => {
   let today = new Date();
+  let navigate = useNavigate();
   let week = ["일", "월", "화", "수", "목", "금", "토"];
   let [focusTime, setFocusTime] = useState(0);
   let [totalTime, setTotalTime] = useState(0);
   let [startTime, setStartTime] = useState(0);
   let [endTime, setEndTime] = useState(0);
   let [date, setDate] = useState(null);
-
   const [userObj, setUserObj] = useState(props.userObj);
-
   let [id, setId] = useState();
-  let navigate = useNavigate();
 
+  //시간 형식 출력함수
   const formatTime = (time) => {
     const hours = Math.floor(time / 3600);
     const minutes = Math.floor((time / 60) % 60);
@@ -40,27 +37,11 @@ const Main = (props) => {
       .padStart(2, "0")}:${seconds}`;
   };
 
+  //시간 데이터 가져오기 함수 호출
   useEffect(() => {
     getData();
   }, []);
-
-  //사용자의 시간이 과거일 경우 리셋
-  async function resetTime(did) {
-    const todoRdf = doc(dbService, "user", `${did}`);
-    console.log("time reset");
-    console.log(date);
-    console.log(today.getDate());
-    await updateDoc(todoRdf, {
-      time: {
-        focus: 0,
-        total: 0,
-        start: 0,
-        end: 0,
-        date: today.getDate(),
-      },
-    });
-  }
-
+  
   //사용자 시간 가져오기
   async function getData() {
     const dbinfo = await getDocs(query(collection(dbService, "user")));
@@ -69,6 +50,7 @@ const Main = (props) => {
         ...doc.data(),
         id: doc.id,
       };
+      //사용자의 이메일과 저장된 이메일이 같은 경우 
       if (dataObj.email === userObj.email) {
         setId(dataObj.id);
         setEndTime(dataObj.time.end);
@@ -88,7 +70,25 @@ const Main = (props) => {
     });
   }
 
-  //사용자의 시작 시간이 오늘인 경우 공부 시작 시간 설정
+  //사용자의 시간이 과거일 경우 리셋
+  async function resetTime(did) {
+    const todoRdf = doc(dbService, "user", `${did}`);
+    console.log("time reset");
+    console.log(date);
+    console.log(today.getDate());
+    await updateDoc(todoRdf, {
+      time: {
+        focus: 0,
+        total: 0,
+        start: 0,
+        end: 0,
+        date: today.getDate(),
+      },
+    });
+  }
+
+
+  //사용자의 시작 시간 0인 경우 현재를 시작 시간으로 변경 
   async function setTime() {
     const todoRdf = doc(dbService, "user", `${id}`);
 

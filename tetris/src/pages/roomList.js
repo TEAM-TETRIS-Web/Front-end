@@ -1,12 +1,7 @@
 /* eslint-disable*/
 import React, { useState, useEffect } from "react";
 import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
-import "./roomList.css";
-
-import { authService } from "./../fbase";
 import { dbService } from "../fbase";
-import { doc, updateDoc } from "firebase/firestore";
-import Todo from "./todo.js";
 import {
   addDoc,
   collection,
@@ -15,9 +10,11 @@ import {
   getDocs,
   orderBy,
 } from "firebase/firestore";
+import "./roomList.css";
 
 const RoomList = (props) => {
   let navigate = useNavigate();
+  const [userObj, setUserObj] = useState(props.userObj);
 
   let [room, setRoom] = useState([]);
   let [modal, setModal] = useState(Array(room.length).fill(false));
@@ -25,16 +22,16 @@ const RoomList = (props) => {
   let [title, setTitle] = useState();
   let [roomDetail, setDetail] = useState();
   let [roomMode, setRoomMode] = useState(false);
-  const [userObj, setUserObj] = useState(props.userObj);
   let [totalTime, setTotalTime] = useState(0);
   let [userName, setUserName] = useState(null);
 
+  //렌더링 시 방 목록 및 시간 데이터 가져오기 
   useEffect(() => {
     getData();
     getTimeData();
   }, []);
 
-  //방 가져오기
+  //방 목록 가져오기
   async function getData() {
     const dbProblems = await getDocs(query(collection(dbService, "room")));
     dbProblems.forEach((doc) => {
@@ -42,6 +39,7 @@ const RoomList = (props) => {
         ...doc.data(),
         id: doc.id,
       };
+      //공개방인 경우 가져오기 
       if (roomObj.mode) {
         setRoom((prev) => [roomObj, ...prev]);
       }
@@ -55,6 +53,7 @@ const RoomList = (props) => {
         ...doc.data(),
         id: doc.id,
       };
+      //현재 로그인한 사용자인 경우 저장
       if (dataObj.email == userObj.email) {
         setTotalTime(dataObj.time.total);
         setUserName(dataObj.name);
@@ -72,12 +71,6 @@ const RoomList = (props) => {
     });
     navigate(`/room/${docRef.id}`,);
   }
-
-  const makeRoom = () => {
-    // 대충 이름과 설명 정보 및 참가한 사람 정보 보내기
-    setTitle("");
-    setDetail("");
-  }
   return (
     <div className="container">
       <div className="roomList-pg row">
@@ -90,6 +83,7 @@ const RoomList = (props) => {
                 <div className="room-div row white-bg">
                   <span
                     className="room-name col-8"
+                    //클릭시 방 설명 모달 창 생성 
                     onClick={() => {
                       let copy_modal = [...modal];
                       copy_modal[i] = !copy_modal[i];
@@ -100,6 +94,7 @@ const RoomList = (props) => {
                   </span>
                   <span className=" col room-person"></span>
                   <button
+                  //클릭 시 해당 방으로 이동 
                     onClick={() => {
                       navigate(`/room/${room.id}`, {
                         state: {

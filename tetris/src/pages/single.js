@@ -1,18 +1,6 @@
 /* eslint-disable*/
 import React, { useState, useEffect } from "react";
-import {
-  Routes,
-  Route,
-  Link,
-  useNavigate,
-  Outlet,
-  useParams,
-  useLocation,
-} from "react-router-dom";
-import "./single.css";
-import Todo from "./todo.js";
-
-import { authService } from "./../fbase";
+import { useNavigate, useLocation } from "react-router-dom";
 import { dbService } from "../fbase";
 import { doc, updateDoc } from "firebase/firestore";
 import {
@@ -23,19 +11,21 @@ import {
   getDocs,
   orderBy,
 } from "firebase/firestore";
+import "./single.css";
+import Todo from "./todo.js";
 
 const Single = (props) => {
   const location = useLocation();
+  let navigate = useNavigate();
   let today = new Date();
   let week = ["일", "월", "화", "수", "목", "금", "토"];
+  let id = location.state.id;
   let [focusTime, setFocusTime] = useState(location.state.focusTime);
   let [totalTime, setTotalTime] = useState(location.state.totalTime);
   let [startTime, setStartTime] = useState(location.state.startTime);
-  let id = location.state.id;
   const [userObj, setUserObj] = useState(props.userObj);
-  let navigate = useNavigate();
-  let isFocus = true;
 
+  //영상 관련 변수
   const videoRef = React.useRef(null);
 
   //카메라 켜기
@@ -52,8 +42,9 @@ const Single = (props) => {
     }
   };
 
-  // show video
+  // 렌더링 시 카메라 켜기 및 데이터 가져오기
   useEffect(() => {
+    init();
     getData();
     getWebcam((stream) => {
       videoRef.current.srcObject = stream;
@@ -61,6 +52,9 @@ const Single = (props) => {
   }, []);
 
   //집중도 체크 모델
+  let isFocus = true; //참인 경우 집중 시간 증가
+
+  //포즈 체크
   const URL = "https://teachablemachine.withgoogle.com/models/H3D75BKiP/";
   let model, webcam, ctx, labelContainer, maxPredictions;
 
@@ -68,7 +62,9 @@ const Single = (props) => {
   const URL2 = "https://teachablemachine.withgoogle.com/models/L7ABWu3p4/";
   let model2, maxPredictions2;
 
+  //모델 초기 함수
   async function init() {
+    //포즈 체크
     const modelURL = URL + "model.json";
     const metadataURL = URL + "metadata.json";
 
@@ -82,7 +78,7 @@ const Single = (props) => {
     model2 = await tmImage.load(modelURL2, metadataURL2);
     maxPredictions2 = model2.getTotalClasses();
 
-    // Convenience function to setup a webcam
+    //웹캠 가져오기
     const size = 200;
     const flip = true;
     webcam = new tmPose.Webcam(size, size, flip);
@@ -95,27 +91,22 @@ const Single = (props) => {
     await predict();
   }
 
+  //예측 모델
   async function predict() {
+    //포즈 예측
     const { pose, posenetOutput } = await model.estimatePose(webcam.canvas);
     const prediction = await model.predict(posenetOutput);
 
-    
-    for (let i = 0; i < maxPredictions; i++) {
-      const classPrediction =
-      prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-      console.log(classPrediction);
-    }
-    // predict can take in an image, video or canvas html element
+    //폰 예측
     const prediction2 = await model2.predict(webcam.canvas);
-    for (let i = 0; i < maxPredictions2; i++) {
-      const classPrediction =
-      prediction2[i].className + ": " + prediction2[i].probability.toFixed(2);
-      console.log(classPrediction);
-    }  
-    (prediction[0].probability > 0.4 && prediction2[0].probability < 0.7 ) ? isFocus = true : isFocus = false;
+
+    // 정상 공부 자세 확률이 0.4 초과 / 폰을 들고 있을 확률이 0.7 미만인 경우 집중도 체크
+    prediction[0].probability > 0.4 && prediction2[0].probability < 0.7
+      ? (isFocus = true)
+      : (isFocus = false);
   }
 
-
+  //7초마다 한번씩 포즈 및 폰 유무 체크
   useEffect(() => {
     const intervalId = setInterval(() => {
       window.requestAnimationFrame(loop);
@@ -128,14 +119,19 @@ const Single = (props) => {
 
   // 공부시간 증가
   useEffect(() => {
+    //집중하고 있는 경우 증가
     const intervalId = setInterval(() => {
-      isFocus ? setFocusTime((focusTime) => focusTime + 1) : 0;
+      if (isFocus) {
+        setFocusTime((focusTime) => focusTime + 1);
+      }
+      //전체 공부시간 증가
       setTotalTime((totalTime) => totalTime + 1);
     }, 1000);
 
     return () => clearInterval(intervalId);
   }, []);
 
+  //시간 형식 출력 함수 
   const formatTime = (time) => {
     const hours = Math.floor(time / 3600);
     const minutes = Math.floor((time / 60) % 60);
@@ -153,6 +149,7 @@ const Single = (props) => {
         ...doc.data(),
         id: doc.id,
       };
+      //사용자의 정보인 경우 가져오기
       if (dataObj.email === userObj.email) {
         setStartTime(dataObj.time.start);
       }
@@ -175,9 +172,7 @@ const Single = (props) => {
       },
     });
   }
-
-  init();
-
+  
   return (
     <div className="blue-bg single-pg">
       <div className="container">

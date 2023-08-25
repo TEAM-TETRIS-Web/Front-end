@@ -1,8 +1,5 @@
 /* eslint-disable*/
 import React, { useState, useEffect } from "react";
-import "./todo.css";
-
-import { authService } from "./../fbase";
 import { dbService } from "../fbase";
 import { doc, updateDoc } from "firebase/firestore";
 import {
@@ -13,6 +10,7 @@ import {
   getDocs,
   orderBy,
 } from "firebase/firestore";
+import "./todo.css";
 
 const Todo = (props) => {
   let [todo, setTodo] = useState([]);
@@ -21,6 +19,7 @@ const Todo = (props) => {
   let [data, setData] = useState();
   let [id, setId] = useState();
 
+  //데이터 가져오기 
   useEffect(() => {
     getData();
   }, []);
@@ -41,9 +40,9 @@ const Todo = (props) => {
     });
   }
 
-  //todo update
   const todoRdf = doc(dbService, "user", `${id}`);
-
+  
+  //todo update
   async function onSubmit(event) {
     await setTodo([todoText, ...todo]);
     await updateDoc(todoRdf, {

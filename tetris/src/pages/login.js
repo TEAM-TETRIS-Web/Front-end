@@ -4,11 +4,9 @@ import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
 import "./login.css";
 import "./common/common.css";
 import focustudy from "./../assets/focustudy.jpg";
-
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
-
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -19,12 +17,7 @@ import { authService, dbService } from "../fbase";
 import {
   addDoc,
   collection,
-  onSnapshot,
-  query,
-  getDocs,
-  orderBy,
 } from "firebase/firestore";
-import { doc, updateDoc } from "firebase/firestore";
 
 const Login = () => {
   let navigate = useNavigate();
@@ -62,7 +55,7 @@ const Login = () => {
           .then((userCredential) => {
             // Signed in
             const user = userCredential.user;
-            //계정 정보 DB 생성
+            //계정 정보 DB 생성 (시간, 이름, 투두가 들어감)
             const docRef = addDoc(collection(dbService, "user"), {
               email: email,
               name: name,
@@ -81,9 +74,11 @@ const Login = () => {
           .catch((error) => {
             const errorCode = error.code;
             setError(error.message);
+            console.log(error);
             // ..
           });
       } else {
+        //로그인인 경우 
         signInWithEmailAndPassword(auth, email, password)
           .then((userCredential) => {
             // Signed in
@@ -106,12 +101,15 @@ const Login = () => {
           <img src={focustudy} width="100%" />
         </div>
         <div className="col main-div">
+            {/* 웹 title */}
           <div className="title-div">
             <p className="login-detail none-margin">집중하면서</p>
             <p className="login-detail none-margin">공부하고 싶다면,</p>
             <p className="login-main none-margin">FocuStudy</p>
           </div>
+          {/* 로그인 화면 창 */}
           <div className="login-div">
+            {/* 이름작성 - 새 계정 생성시만 출력 */}
             {newAccount ? (
               <input
                 name="name"
@@ -122,6 +120,7 @@ const Login = () => {
                 onChange={onChange}
               />
             ) : null}
+              {/* 이메일 작성 */}
             <input
               name="email"
               type="text"
@@ -131,6 +130,7 @@ const Login = () => {
               onChange={onChange}
             />
             <br />
+            {/* 비밀번호 작성 */}
             <input
               name="password"
               type="password"
@@ -140,6 +140,7 @@ const Login = () => {
               onChange={onChange}
             />{" "}
             <br />
+            {/* 계정 생성 및 로그인 선택 */}
             <button className="login-button btn" onClick={onSubmit}>
               {newAccount ? "계정 생성" : "로그인"}
             </button>
@@ -154,6 +155,9 @@ const Login = () => {
               </span>
               {"   "}| {"   "}
               <span onClick={handleShow}>비밀번호 찾기</span>
+
+              {/* 비밀번호 찾기 modal 창 */}
+
               <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                   <Modal.Title>비밀번호 찾기</Modal.Title>

@@ -1,7 +1,5 @@
 /* eslint-disable*/
 import React, { useState, useEffect } from "react";
-import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
-
 import "./mypage.css";
 import person from "./../assets/person.png";
 import pen from "./../assets/ppyojogi.png";
@@ -26,18 +24,10 @@ const Mypage = (props) => {
   let [date, setDate] = useState(null);
   let [name, setName] = useState("");
 
+  //시간 데이터 가져오기 함수 호출
   useEffect(() => {
     getData();
   }, []);
-
-  const formatTime = (time) => {
-    const hours = Math.floor(time / 3600);
-    const minutes = Math.floor((time / 60) % 60);
-    const seconds = (time % 60).toString().padStart(2, "0");
-    return `${hours.toString().padStart(2, "0")}:${minutes
-      .toString()
-      .padStart(2, "0")}:${seconds}`;
-  };
 
   //사용자 시간 가져오기
   async function getData() {
@@ -54,17 +44,20 @@ const Mypage = (props) => {
         setTotalTime(dataObj.time.total);
         setDate(dataObj.time.date);
         setName(dataObj.name);
-        if (dataObj.time.date != today.getDate()) {
-          console.log("시간 초기화 됨");
-          setEndTime(0);
-          setStartTime(0);
-          setFocusTime(0);
-          setTotalTime(0);
-          resetTime(dataObj.id);
-        }
       }
     });
   }
+
+  //시간 형식 출력 함수 
+  const formatTime = (time) => {
+    const hours = Math.floor(time / 3600);
+    const minutes = Math.floor((time / 60) % 60);
+    const seconds = (time % 60).toString().padStart(2, "0");
+    return `${hours.toString().padStart(2, "0")}:${minutes
+      .toString()
+      .padStart(2, "0")}:${seconds}`;
+  };
+
 
   return (
     <div className="container row">

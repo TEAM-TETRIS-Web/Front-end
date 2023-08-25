@@ -9,7 +9,6 @@ import Room from "../pages/room";
 
 import Community from "../pages/community";
 import Content from "../pages/content";
-import AddContent from "../pages/addContent";
 import Mypage from "../pages/mypage";
 
 import React, { useState, useEffect } from "react";
@@ -34,11 +33,6 @@ function AppRouter(props) {
         )}
         {isLoggedIn ? (
           <Route path="/community/:url" element={<Content />} />
-        ) : (
-          <></>
-        )}
-        {isLoggedIn ? (
-          <Route path="/community/new" element={<AddContent />} />
         ) : (
           <></>
         )}

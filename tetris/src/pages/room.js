@@ -20,33 +20,39 @@ import {
 import { authService } from "./../fbase";
 import { dbService } from "../fbase";
 import { doc, updateDoc } from "firebase/firestore";
-
 import Todo from "./todo.js";
 import "./room.css";
 import "./common/common.css";
+
+//이미지 가져오기
 import sStudy from "./../assets/s-study.jpg";
 import mStudy from "./../assets/m-study.jpg";
 import lStudy from "./../assets/l-study.jpg";
 import plus from "./../assets/plus.png";
 
 const Room = (props) => {
-  let [focusTime, setFocusTime] = useState(0);
-  let [totalTime, setTotalTime] = useState(0);
-  let [endTime, setEndTime] = useState(0);
   let navigate = useNavigate();
-  let { url } = useParams();
-  const [userObj, setUserObj] = useState(props.userObj);
-  let [id, setId] = useState();
   const location = useLocation();
   let today = new Date();
-  let [roomName, setName] = useState("");
-  let [users, setUsers] = useState([]);
-  let [roomObj, setRoomObj] = useState();
-  let [userName, setUserName] = useState();
+  let { url } = useParams();
+
+  //사용자 시간 관련 변수 선언
+  const [userObj, setUserObj] = useState(props.userObj);
+  let [focusTime, setFocusTime] = useState(0);
+  let [totalTime, setTotalTime] = useState(0);
   let [startTime, setStartTime] = useState();
-  let isFocus = true;
+  let [endTime, setEndTime] = useState(0);
+  let [id, setId] = useState();
+  let [userName, setUserName] = useState(); //현재 사용자 이름
+
+  //방 관련 변수 선언
+  let [users, setUsers] = useState([]); //방의 인원 목록
+  let [roomName, setName] = useState("");
 
   //집중도 체크 모델
+  let isFocus = true; //참인 경우 집중 시간 증가
+
+  //포즈 체크
   const URL = "https://teachablemachine.withgoogle.com/models/H3D75BKiP/";
   let model, webcam, ctx, labelContainer, maxPredictions;
 
@@ -54,7 +60,9 @@ const Room = (props) => {
   const URL2 = "https://teachablemachine.withgoogle.com/models/L7ABWu3p4/";
   let model2, maxPredictions2;
 
+  //모델 초기 함수
   async function init() {
+    //포즈 체크
     const modelURL = URL + "model.json";
     const metadataURL = URL + "metadata.json";
 
@@ -68,7 +76,7 @@ const Room = (props) => {
     model2 = await tmImage.load(modelURL2, metadataURL2);
     maxPredictions2 = model2.getTotalClasses();
 
-    // Convenience function to setup a webcam
+    //웹캠 가져오기
     const size = 200;
     const flip = true;
     webcam = new tmPose.Webcam(size, size, flip);
@@ -81,27 +89,22 @@ const Room = (props) => {
     await predict();
   }
 
+  //예측 모델
   async function predict() {
+    //포즈 예측
     const { pose, posenetOutput } = await model.estimatePose(webcam.canvas);
     const prediction = await model.predict(posenetOutput);
 
-    
-    for (let i = 0; i < maxPredictions; i++) {
-      const classPrediction =
-      prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-      console.log(classPrediction);
-    }
-    // predict can take in an image, video or canvas html element
+    //폰 예측
     const prediction2 = await model2.predict(webcam.canvas);
-    for (let i = 0; i < maxPredictions2; i++) {
-      const classPrediction =
-      prediction2[i].className + ": " + prediction2[i].probability.toFixed(2);
-      console.log(classPrediction);
-    }  
-    (prediction[0].probability > 0.4 && prediction2[0].probability < 0.7 ) ? isFocus = true : isFocus = false;
+
+    // 정상 공부 자세 확률이 0.4 초과 / 폰을 들고 있을 확률이 0.7 미만인 경우 집중도 체크
+    prediction[0].probability > 0.4 && prediction2[0].probability < 0.7
+      ? (isFocus = true)
+      : (isFocus = false);
   }
 
-
+  //7초마다 한번씩 포즈 및 폰 유무 체크
   useEffect(() => {
     const intervalId = setInterval(() => {
       window.requestAnimationFrame(loop);
@@ -111,31 +114,24 @@ const Room = (props) => {
   }, []);
 
   //집중도 체크 모델 끝 ///////
-  
+
+  //렌더링 시 데이터 가져오기 및 모델 초기화
   useEffect(() => {
     getTimeData();
-  }, [])
-
-  useEffect(() => {
+    init();
     getRoomData();
-  })
-  
-  // useEffect(() => {
-  //   addUser();
-  // }, [])
+  }, []);
 
-  
   //방 인원 추가
   async function addUser() {
     const roomRDF = doc(dbService, "room", `${url}`);
-    let isFound = users.some(data => data.name == userName);
+    let isFound = users.some((data) => data.name == userName);
     if (!isFound) {
       setUsers([{ name: userName, time: totalTime }, ...users]);
       await updateDoc(roomRDF, {
         user: [{ name: userName, time: totalTime }, ...users],
       });
-    }
-    else {
+    } else {
       console.log("이미 추가된 사용자입니다.");
     }
   }
@@ -154,12 +150,11 @@ const Room = (props) => {
       }
     });
   }
-  
+
   //방에서 나갈 때 사용자 제거
   async function delUser(event) {
-    
     const roomRDF = doc(dbService, "room", `${url}`);
-    let isFound = users.some(data => data.name == userName);
+    let isFound = users.some((data) => data.name == userName);
     if (isFound) {
       let i = users.findIndex((e) => e.name == userName);
       let newUsers = [...users];
@@ -171,15 +166,12 @@ const Room = (props) => {
       });
 
       if (users.length == 0) {
-
       }
-    }
-    else {
+    } else {
       console.log("없는 사용자입니다.");
     }
   }
 
-  
   //사용자 시간 가져오기
   async function getTimeData() {
     const dbinfo = await getDocs(query(collection(dbService, "user")));
@@ -199,32 +191,6 @@ const Room = (props) => {
     });
   }
 
-  //사용자의 시작 시간이 오늘인 경우 공부 시작 시간 설정
-  async function setTime() {
-    const todoRdf = doc(dbService, "user", `${id}`);
-
-    if (startTime === 0) {
-      setStartTime(
-        today.getHours() * 3600 + today.getMinutes() * 60 + today.getSeconds()
-      );
-      await updateDoc(todoRdf, {
-        time: {
-          focus: 0,
-          total: 0,
-          start:
-            today.getHours() * 3600 +
-            today.getMinutes() * 60 +
-            today.getSeconds(),
-          end: 0,
-          date: today.getDate(),
-        },
-      });
-      setStartTime(
-        today.getHours() * 3600 + today.getMinutes() * 60 + today.getSeconds()
-      );
-    }
-  }
-
   //사용자 시간 저장하기
   async function onSubmit(event) {
     const todoRdf = doc(dbService, "user", `${id}`);
@@ -242,6 +208,7 @@ const Room = (props) => {
       },
     });
   }
+
   //클립보드 복사 함수
   const handleCopyClipBoard = () => {
     try {
@@ -255,11 +222,13 @@ const Room = (props) => {
   // 공부시간 증가
   useEffect(() => {
     const intervalId = setInterval(() => {
-      const intervalId = setInterval(() => {
-      isFocus ? setFocusTime((focusTime) => focusTime + 1) : 0;
+      //집중하고 있는 경우 증가
+      if (isFocus) {
+        setFocusTime((focusTime) => focusTime + 1);
+      }
+      //전체 공부시간 매초 증가
       setTotalTime((totalTime) => totalTime + 1);
-    }, 1000);
-      setTotalTime((totalTime) => totalTime + 1);
+      //공부방 목록 인원 시간 증가 
       setUsers((users) =>
         users.map((user) => ({ ...user, time: user.time + 1 }))
       );
@@ -268,6 +237,7 @@ const Room = (props) => {
     return () => clearInterval(intervalId);
   }, []);
 
+  //시간 출력 형식 함수 
   const formatTime = (time) => {
     const hours = Math.floor(time / 3600);
     const minutes = Math.floor((time / 60) % 60);
