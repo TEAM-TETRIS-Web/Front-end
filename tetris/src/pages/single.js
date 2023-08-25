@@ -112,7 +112,7 @@ const Single = (props) => {
       prediction2[i].className + ": " + prediction2[i].probability.toFixed(2);
       console.log(classPrediction);
     }  
-    (prediction[0].probability > 0.4 && prediction2[0].probability < 0.7 ) ? isFocus = true : iIsFocus = false;
+    (prediction[0].probability > 0.4 && prediction2[0].probability < 0.7 ) ? isFocus = true : isFocus = false;
   }
 
 

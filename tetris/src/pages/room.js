@@ -138,8 +138,9 @@ const Room = (props) => {
     const intervalId = setInterval(() => {
       setFocusTime((focusTime) => focusTime + 1);
       setTotalTime((totalTime) => totalTime + 1);
-      setUsers(users => users.map(user => ({...user, time: user.time + 1})));
-
+      setUsers((users) =>
+        users.map((user) => ({ ...user, time: user.time + 1 }))
+      );
     }, 1000);
 
     return () => clearInterval(intervalId);
@@ -225,15 +226,13 @@ const Room = (props) => {
               </div>
             );
           })}
-          <div className="col-2 card user-card">
-                <img
-                  className="card-img-top user-img"
-                />
-                <div className="card-body">
-                  <h5 className="card-title blue-bg"></h5>
-                  <p className="card-text">{}</p>
-                </div>
-              </div>
+        <div className="col-2 card user-card">
+          <FontAwesomeIcon className="card-img-top" icon="fa-regular fa-circle-plus" />
+          <div className="card-body">
+            <h5 className="card-title blue-bg"></h5>
+            <p className="card-text">{}</p>
+          </div>
+        </div>
       </div>
     </div>
   );
