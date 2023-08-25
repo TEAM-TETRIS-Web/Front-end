@@ -34,9 +34,11 @@ const Single = (props) => {
   let id = location.state.id;
   const [userObj, setUserObj] = useState(props.userObj);
   let navigate = useNavigate();
+  let [isFocus, setIsFocus] = useState(true);
 
   const videoRef = React.useRef(null);
 
+  //카메라 켜기
   const getWebcam = (callback) => {
     try {
       const constraints = {
@@ -58,11 +60,50 @@ const Single = (props) => {
     // });
   }, []);
 
+  //집중도 체크 모델
+  const URL = "https://teachablemachine.withgoogle.com/models/H3D75BKiP/";
+  let model, webcam, ctx, labelContainer, maxPredictions;
+
+  async function init() {
+    const modelURL = URL + "model.json";
+    const metadataURL = URL + "metadata.json";
+
+    model = await tmPose.load(modelURL, metadataURL);
+    maxPredictions = model.getTotalClasses();
+
+    // Convenience function to setup a webcam
+    const size = 200;
+    const flip = true;
+    webcam = new tmPose.Webcam(size, size, flip); 
+    await webcam.setup();
+    await webcam.play();
+    window.requestAnimationFrame(loop);
+  }
+
+  async function loop(timestamp) {
+    webcam.update(); // update the webcam frame
+    await predict();
+  }
+
+  async function predict() {
+    const { pose, posenetOutput } = await model.estimatePose(webcam.canvas);
+    const prediction = await model.predict(posenetOutput);
+
+    prediction[0] > 0.4 ? setIsFocus(true) : isFocus(false);
+    
+    for (let i = 0; i < maxPredictions; i++) {
+      const classPrediction =
+        prediction[i].className + ": " + prediction[i].probability.toFixed(2);
+      console.log(classPrediction);
+    }
+  }
+
+  //집중도 체크 모델 끝 ///////
 
   // 공부시간 증가
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setFocusTime((focusTime) => focusTime + 1);
+      isFocus ? setFocusTime((focusTime) => focusTime + 1) : 0;
       setTotalTime((totalTime) => totalTime + 1);
     }, 1000);
 
@@ -140,9 +181,13 @@ const Single = (props) => {
             {/* Focus Time 끝 */}
             {/* 공부 화면 시작 */}
             <div className="icon-div">
-              <div className="video-div">{/* <video ref={videoRef} width="100%" autoPlay /> */}</div>
+              <div className="video-div">
+                {/* <video ref={videoRef} width="100%" autoPlay /> */}
+              </div>
               <div className="icon-comment-div">
-                <p className="icon-comment none-margin">화면 왜봄 공부나 하셈</p>
+                <p className="icon-comment none-margin">
+                  화면 왜봄 공부나 하셈
+                </p>
               </div>
             </div>
             {/* 공부 화면  끝 */}
