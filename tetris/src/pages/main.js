@@ -152,19 +152,19 @@ const Main = (props) => {
           {/* Focus Time 끝 */}
           {/* 총 공부 시간, 최대 집중 시간, 시작 시간, 종료 시간 */}
           <div className="row timeText-div">
-            <div className="col-6">
+            <div className="col-lg-6">
               <p className="title">총공부시간</p>
               <p className="time">{formatTime(totalTime)}</p>
             </div>
-            <div className="col-6">
+            <div className="col-lg-6">
               <p className="title">최대 집중 시간</p>
               <p className="time">{formatTime(focusTime)}</p>
             </div>
-            <div className="col-6">
+            <div className="col-lg-6">
               <p className="title">시작시간</p>
               <p className="time">{formatTime(startTime)}</p>
             </div>
-            <div className="col-6">
+            <div className="col-lg-6">
               <p className="title">종료시간</p>
               <p className="time">{formatTime(endTime)}</p>
             </div>

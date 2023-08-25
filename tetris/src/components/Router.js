@@ -25,7 +25,7 @@ function AppRouter(props) {
         {isLoggedIn ? <Route path="/" element={<Main userObj={props.userObj}/>} /> : <></>}
         {isLoggedIn ? <Route path="/single" element={<Single userObj={props.userObj} />} /> : <></>}
         {isLoggedIn ? <Route path="/report" element={<Report />} /> : <></>}
-        {isLoggedIn ? <Route path="/roomlist" element={<RoomList />} /> : <></>}
+        {isLoggedIn ? <Route path="/roomlist" element={<RoomList userObj={props.userObj} />} /> : <></>}
         {isLoggedIn ? <Route path="/room/:url" element={<Room userObj={props.userObj}/>} /> : <></>}
         {isLoggedIn ? (
           <Route path="/community" element={<Community />} />

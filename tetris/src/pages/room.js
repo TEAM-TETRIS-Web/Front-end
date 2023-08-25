@@ -23,7 +23,7 @@ import { doc, updateDoc } from "firebase/firestore";
 
 import Todo from "./todo.js";
 import "./room.css";
-
+import "./common/common.css";
 import sStudy from "./../assets/s-study.jpg";
 import mStudy from "./../assets/m-study.jpg";
 import lStudy from "./../assets/l-study.jpg";
@@ -207,7 +207,7 @@ const Room = (props) => {
         {users &&
           users.map(function (person, i) {
             return (
-              <div className="col-2 card" key={i}>
+              <div className="col-2 card user-card" key={i}>
                 <img
                   className="card-img-top user-img"
                   src={
@@ -225,6 +225,15 @@ const Room = (props) => {
               </div>
             );
           })}
+          <div className="col-2 card user-card">
+                <img
+                  className="card-img-top user-img"
+                />
+                <div className="card-body">
+                  <h5 className="card-title blue-bg"></h5>
+                  <p className="card-text">{}</p>
+                </div>
+              </div>
       </div>
     </div>
   );

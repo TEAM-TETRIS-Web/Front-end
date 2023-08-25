@@ -16,7 +16,7 @@ import {
   orderBy,
 } from "firebase/firestore";
 
-const RoomList = () => {
+const RoomList = (props) => {
   let navigate = useNavigate();
 
   let [room, setRoom] = useState([]);
@@ -25,18 +25,13 @@ const RoomList = () => {
   let [title, setTitle] = useState();
   let [roomDetail, setDetail] = useState();
   let [roomMode, setRoomMode] = useState(false);
-  let [userObj, setUserObj] = useState(null);
-  useEffect(() => {
-    //로그인 상태 감지
-    authService.onAuthStateChanged((user) => {
-      if (user) {
-        setUserObj(user);
-      }
-    });
-  }, []);
+  const [userObj, setUserObj] = useState(props.userObj);
+  let [totalTime, setTotalTime] = useState(0);
+  let [userName, setUserName] = useState(null);
 
   useEffect(() => {
     getData();
+    getTimeData();
   }, []);
 
   //방 가져오기
@@ -52,14 +47,28 @@ const RoomList = () => {
       }
     });
   }
-
+  //사용자 시간 가져오기
+  async function getTimeData() {
+    const dbinfo = await getDocs(query(collection(dbService, "user")));
+    dbinfo.forEach((doc) => {
+      const dataObj = {
+        ...doc.data(),
+        id: doc.id,
+      };
+      if (dataObj.email == userObj.email) {
+        setTotalTime(dataObj.time.total);
+        setUserName(dataObj.name);
+      }
+    });
+  }
+  
   //방 만들기
   async function addRoom(event) {
     const docRef = await addDoc(collection(dbService, "room"), {
       name: title,
       detail: roomDetail,
       mode : roomMode,
-      user : [],
+      user : [{name : userName, time : totalTime},],
     });
     navigate(`/room/${docRef.id}`,);
   }

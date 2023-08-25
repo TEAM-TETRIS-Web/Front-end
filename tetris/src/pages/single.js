@@ -34,7 +34,7 @@ const Single = (props) => {
   let id = location.state.id;
   const [userObj, setUserObj] = useState(props.userObj);
   let navigate = useNavigate();
-  let [isFocus, setIsFocus] = useState(true);
+  let isFocus = true;
 
   const videoRef = React.useRef(null);
 
@@ -99,20 +99,20 @@ const Single = (props) => {
     const { pose, posenetOutput } = await model.estimatePose(webcam.canvas);
     const prediction = await model.predict(posenetOutput);
 
-    prediction[0] > 0.4 ? setIsFocus(true) : setIsFocus(false);
-
+    
     for (let i = 0; i < maxPredictions; i++) {
       const classPrediction =
-        prediction[i].className + ": " + prediction[i].probability.toFixed(2);
+      prediction[i].className + ": " + prediction[i].probability.toFixed(2);
       console.log(classPrediction);
     }
     // predict can take in an image, video or canvas html element
     const prediction2 = await model2.predict(webcam.canvas);
     for (let i = 0; i < maxPredictions2; i++) {
       const classPrediction =
-        prediction2[i].className + ": " + prediction2[i].probability.toFixed(2);
+      prediction2[i].className + ": " + prediction2[i].probability.toFixed(2);
       console.log(classPrediction);
     }  
+    (prediction[0].probability > 0.4 && prediction2[0].probability < 0.7 ) ? isFocus = true : iIsFocus = false;
   }
 
 

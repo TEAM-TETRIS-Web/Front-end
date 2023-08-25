@@ -73,7 +73,14 @@
   line-height: normal;
 }
 
+.user-card {
+  margin: 5px;
+}
 .user-img {
   width: 65%;
   margin : 10% auto !important;
+}
+
+.card-title {
+  /* background: ; */
 }
