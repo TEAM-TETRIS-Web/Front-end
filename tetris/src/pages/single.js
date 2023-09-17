@@ -87,7 +87,7 @@ const Single = (props) => {
   }
 
   async function loop(timestamp) {
-    await webcam.update(); // update the webcam frame
+    // await webcam.update(); // update the webcam frame
     await predict();
   }
 
@@ -99,9 +99,10 @@ const Single = (props) => {
 
     //폰 예측
     const prediction2 = await model2.predict(webcam.canvas);
-
+    console.log(prediction);
+    console.log(prediction2);
     // 정상 공부 자세 확률이 0.4 초과 / 폰을 들고 있을 확률이 0.7 미만인 경우 집중도 체크
-    prediction[0].probability > 0.4 && prediction2[0].probability < 0.7
+    prediction[0].probability > 0.4 && prediction2[1].probability < 0.7
       ? (isFocus = true)
       : (isFocus = false);
   }
