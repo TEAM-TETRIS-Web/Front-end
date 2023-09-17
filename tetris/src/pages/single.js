@@ -55,11 +55,11 @@ const Single = (props) => {
   let isFocus = true; //참인 경우 집중 시간 증가
 
   //포즈 체크
-  const URL = "https://teachablemachine.withgoogle.com/models/H3D75BKiP/";
+  const URL = "https://teachablemachine.withgoogle.com/models/yFueU7xhE/";
   let model, webcam, ctx, labelContainer, maxPredictions;
 
   //폰 체크
-  const URL2 = "https://teachablemachine.withgoogle.com/models/L7ABWu3p4/";
+  const URL2 = "https://teachablemachine.withgoogle.com/models/qbFWdCkyd/";
   let model2, maxPredictions2;
 
   //모델 초기 함수
