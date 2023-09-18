@@ -87,7 +87,7 @@ const Single = (props) => {
   }
 
   async function loop(timestamp) {
-    // await webcam.update(); // update the webcam frame
+    await webcam.update(); // update the webcam frame
     await predict();
   }
 
