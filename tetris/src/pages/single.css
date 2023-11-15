@@ -1,48 +1,101 @@
 @media (min-height: 768px) {
-.single-pg {
-  padding-bottom: 10%;
-}
+	.single-pg {
+		padding-bottom: 10%;
+	}
 }
 
 .single-pg {
-  padding-bottom: 5%;
+	padding-bottom: 5%;
 }
 
 /* Focus Time BG Color  */
 .single-pg .icon-div {
-  background: white;
-  margin-top: 1rem;
-  height: calc(680px - 240px - 1rem);
-  border-radius: 1.25rem;
-  background: #fff;
+	background: white;
+	margin-top: 1rem;
+	height: calc(680px - 240px - 1rem);
+	border-radius: 1.25rem;
+	background: #fff;
 }
 
 .single-pg .toDo-div {
-  background: white;
-  border : none;
+	background: white;
+	border: none;
 }
 
 .icon-div {
-  padding-top : 0.1px;
+	padding-top: 0.1px;
 }
 
 .video-div {
-  margin: 20px;
+	margin: 20px;
 }
 .icon-div .icon-comment-div {
-  text-align: center;
-  margin : 20px;
-  background-color: #92C4FF;
-  border-radius: 50px;
+	text-align: center;
+	margin: 20px;
+	background-color: #92c4ff;
+	border-radius: 50px;
 }
 .icon-div .icon-comment {
-  padding:10px;
-  height: 2.8125rem;
-  color: #000;
-text-align: center;
-font-family: LINE Seed Sans KR;
-font-size: 1.3rem;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
+	padding: 10px;
+	height: 2.8125rem;
+	color: #000;
+	text-align: center;
+	font-family: LINE Seed Sans KR;
+	font-size: 1.3rem;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+}
+
+.modal-content {
+	border-radius: 1.25rem;
+	background: rgba(255, 215, 215, 0.95);
+}
+.modal-phone {
+	margin-top: 1rem;
+	color: #790000;
+	text-align: center;
+	font-family: LINE Seed Sans KR;
+	font-size: 1.875rem;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+}
+
+.modal-text {
+	color: #e80000;
+	text-align: center;
+	font-family: LINE Seed Sans KR;
+	font-size: 3.125rem;
+	font-style: normal;
+	font-weight: 700;
+	line-height: normal;
+}
+
+.wording-div {
+	width: 100%;
+	height: 18rem;
+	flex-shrink: 0;
+	margin-top: 3%;
+	border-radius: 1.25rem;
+	background: #fff;
+}
+
+.study-img {
+	margin-top: 5%;
+	width: 30%;
+	margin-bottom: 5%;
+}
+
+.studyHand-text {
+	margin: 0 10%;
+	padding-top: 5%;
+	border-top: solid 3px rgba(0, 117, 255, 0.5);
+	color: #000;
+	font-family: LINE Seed Sans KR;
+	font-size: 1.5rem;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 1.875rem;
+	letter-spacing: -0.09375rem;
 }
